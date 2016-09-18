@@ -1,0 +1,64 @@
+{
+    "name": "phpserver",
+    "displayName": "PHP Server",
+    "description": "Serve your Project with PHP",
+    "version": "1.0.0",
+    "publisher": "brapifra",
+    "engines": {
+        "vscode": "^1.5.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.serveProject"
+    ],
+    "main": "./extension",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/brapifra/vscode-phpserver.git"
+	},
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.serveProject",
+                "title": "Serve Project with PHP",
+                "icon":{
+                    "light": "./server.svg",
+                    "dark": "./server.svg"
+                }
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "PHP Server Configuration",
+            "properties": {
+                "phpserver.port": {
+                    "type": "integer",
+                    "default": 3000,
+                    "description": "Server Port Number"
+                },
+                "phpserver.relativeurl": {
+                    "type": "string",
+                    "default": "",
+                    "description": "URL relative to Project (In case that you want to serve a particular folder)"
+                }
+            }
+        },
+        "menus": {
+            "editor/title": [
+                {
+                    "command": "extension.serveProject",
+                    "group": "navigation"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "devDependencies": {
+        "vscode": "^0.11.0"
+    },
+    "icon": "server.svg"
+}
