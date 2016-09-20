@@ -5,7 +5,7 @@ Host/Serve current workspace (or subfolder) with PHP.
 ## Features
 
 You can execute it with:<br>
--ctrl+shift+P and searching for "Serve Project with PHP"<br>
+-Ctrl+shift+P and searching for "Serve Project with PHP"<br>
 -Clicking on the editor's button (right superior corner)<br>
 -Right-clicking on the editor.<br>
 To stop the server just search for "Stop PHP Server" or right-click on the editor.<br>
@@ -32,6 +32,9 @@ Code rewritten (almost):<br>
 +Fixed problem with relative url.<br>
 ### 1.0.0
 Initial release of PHP Server
+
+## Bugs
+No console output in Windows
 -----------------------------------------------------------------------------------------------------------
 
 ## For more information
