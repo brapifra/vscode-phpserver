@@ -4,14 +4,12 @@ Host/Serve current workspace (or subfolder) with PHP.
 
 ## Features
 
-You can execute it with:
--ctrl+shift+P and searching for "Serve Project with PHP"
--Clicking on the editor's button (right superior corner)
--Right-clicking on the editor.
-
-To stop the server just search for "Stop PHP Server" or right-click on the editor.
-
-Now with Windows support, auto open localhost in browser.
+You can execute it with:<br>
+-ctrl+shift+P and searching for "Serve Project with PHP"<br>
+-Clicking on the editor's button (right superior corner)<br>
+-Right-clicking on the editor.<br>
+To stop the server just search for "Stop PHP Server" or right-click on the editor.<br>
+Now with Windows support, auto open localhost in browser.<br>
 
 ## Requirements
 
@@ -27,11 +25,11 @@ This extension contributes the following settings:
 
 ## Release Notes
 ### 1.1.0
-Code rewritten (almost):
-+Windows support.
-+Auto open localhost in browser (optional).
-+Added context menu commands.
-+Fixed problem with relative url.
+Code rewritten (almost):<br>
++Windows support.<br>
++Auto open localhost in browser (optional).<br>
++Added context menu commands.<br>
++Fixed problem with relative url.<br>
 ### 1.0.0
 Initial release of PHP Server
 -----------------------------------------------------------------------------------------------------------
