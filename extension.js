@@ -7,15 +7,17 @@ var port = config.get("port");
 var platform = os.platform();
 switch (browser) {
     case "firefox":
-        if (platform == 'win32') {
-            browser = "start " + browser;
+     if (platform == 'linux' || platform == 'darwin') {
+            browser = browser+" http:/localhost:"+port;
+        }else if (platform == 'win32') {
+            browser= "start "+browser+" http:/localhost:"+port;
         }
         break;
     case "chrome":
         if (platform == 'linux' || platform == 'darwin') {
-            browser = "google-chrome";
+            browser = "google-chrome http:/localhost:"+port;
         } else if (platform == 'win32') {
-            browser = "start " + browser;
+            browser= "start "+browser+" http:/localhost:"+port;
         }
         break;
 }
@@ -36,13 +38,13 @@ function activate(context) {
             args.push(relativeurl);
         }
         serverterminal = require('child_process').spawn('php', args, { cwd: vscode.workspace.rootPath });
-        serverterminal.stdout.on('data', (data) => {
-            out.appendLine(`${data}`);
+        serverterminal.stdout.on('data', function(data) {
+            out.appendLine(data.toString());
         });
-        serverterminal.stderr.on('data', (data) => {
-            out.appendLine(`${data}`);
+        serverterminal.stderr.on('data', function(data){
+            out.appendLine(data.toString());
         });
-        serverterminal.on('close', (code) => {
+        serverterminal.on('close', function(code){
             vscode.window.showInformationMessage('Server Stopped');
             out.hide();
         });
@@ -52,7 +54,7 @@ function activate(context) {
         deactivate();
     }));
     if (browser != "") {
-        browserterminal = require('child_process').spawn(browser, ['http://localhost:' + port]);
+        browserterminal=require('child_process').exec(browser);
     }
 }
 exports.activate = activate;
