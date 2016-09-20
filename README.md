@@ -34,7 +34,8 @@ Code rewritten (almost):<br>
 Initial release of PHP Server
 
 ## Bugs
-No console output in Windows
+
+####No console output in Windows
 -----------------------------------------------------------------------------------------------------------
 
 ## For more information
