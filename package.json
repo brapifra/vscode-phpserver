@@ -2,7 +2,7 @@
     "name": "phpserver",
     "displayName": "PHP Server",
     "description": "Serve your Project with PHP",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "publisher": "brapifra",
     "engines": {
         "vscode": "^1.5.0"
@@ -14,19 +14,23 @@
         "onCommand:extension.serveProject"
     ],
     "main": "./extension",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/brapifra/vscode-phpserver.git"
-	},
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/brapifra/vscode-phpserver.git"
+    },
     "contributes": {
         "commands": [
             {
                 "command": "extension.serveProject",
                 "title": "Serve Project with PHP",
-                "icon":{
+                "icon": {
                     "light": "./server.svg",
                     "dark": "./server.svg"
                 }
+            },
+            {
+                "command": "extension.stopServer",
+                "title": "Stop PHP Server"
             }
         ],
         "configuration": {
@@ -42,6 +46,11 @@
                     "type": "string",
                     "default": "",
                     "description": "URL relative to Project (In case that you want to serve a particular folder)"
+                },
+                "phpserver.browser": {
+                    "type": "string",
+                    "default": "firefox",
+                    "description": "Browser that will open the localhost server (Options: firefox or chrome. If empty, no browser will be opened)"
                 }
             }
         },
@@ -49,6 +58,16 @@
             "editor/title": [
                 {
                     "command": "extension.serveProject",
+                    "group": "navigation"
+                }
+            ],
+            "editor/context": [
+                {
+                    "command": "extension.serveProject",
+                    "group": "navigation"
+                },
+                {
+                    "command": "extension.stopServer",
                     "group": "navigation"
                 }
             ]
@@ -59,6 +78,9 @@
     },
     "devDependencies": {
         "vscode": "^0.11.0"
+    },
+    "dependencies": {
+        "os": "^0.1.1"
     },
     "icon": "server.svg"
 }
