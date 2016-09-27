@@ -20,7 +20,32 @@ switch (browser) {
             browser= "start "+browser+" http:/localhost:"+port;
         }
         break;
+    case "vivaldi":
+	    if (platform == 'linux' || platform == 'darwin'){
+	       browser == "vivaldi http:/localhost:"+port
+    	} else if(platform == 'win32') {
+	       browser= "start "+browser+" http:/localhost:"+port;
+	    }
+	    break;
+    case "opera":
+        if (platform == 'linux' || platform == 'darwin'){
+           browser == "opera http:/localhost:"+port
+        } else if (platform == 'win32') {
+           browser= "start "+browser+" http:/localhost:"+port;
+        }
+        break;
+    case "brave":
+        if (platform == 'linux' || platform == 'darwin'){
+            browser == "brave http:/localhost:"+port;
+        } else if (platform == 'win32'){
+            browser= "start "+browser+" http:/localhost:"+port;
+        }
+        break;
+    case "ie":
+            browser= "start "+browser+" http:/localhost:"+port;       
+        break;
 }
+
 var serverterminal;
 var browserterminal;
 function activate(context) {
