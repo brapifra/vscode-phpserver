@@ -41,7 +41,7 @@ switch (browser) {
             browser= "start "+browser+" http:/localhost:"+port;
         }
         break;
-    case "ie":
+    case "iexplore":
             browser= "start "+browser+" http:/localhost:"+port;       
         break;
 }
