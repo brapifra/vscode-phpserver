@@ -51,6 +51,11 @@
                     "type": "string",
                     "default": "firefox",
                     "description": "Browser that will open the localhost server (Options: firefox or chrome. If empty, no browser will be opened)"
+                },
+                "phpserver.executable": {
+                    "type": "string",
+                    "default": "php",
+                    "description": "Path to php executable"
                 }
             }
         },
