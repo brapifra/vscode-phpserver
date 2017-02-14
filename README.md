@@ -21,6 +21,7 @@ This extension contributes the following settings:
 * `phpserver.port`: Localhost port where server will be hosted (Default: 3000)
 * `phpserver.relativeurl`: URL relative to workspace path, in case you want only host a subfolder of workspace (Default: "")
 * `phpserver.browser`: Browser's name that will be opened when server starts, if value='' then no browser will be opened (Default: "firefox", Options: "chrome, firefox, ''").
+* `phpserver.external`: The server is accessible from any interface of your machine, wired or wireless, will bind to all available IP addresses on the system.
 
 
 ## Release Notes

@@ -4,6 +4,7 @@ var config = vscode.workspace.getConfiguration('phpserver');
 var browser = config.get("browser");
 var relativeurl = config.get("relativeurl");
 var port = config.get("port");
+var external = config.get("external");
 var platform = os.platform();
 switch (browser) {
     case "firefox":
@@ -21,7 +22,6 @@ switch (browser) {
         }
         break;
 }
-
 var serverterminal;
 var browserterminal;
 function activate(context) {
@@ -34,6 +34,11 @@ function activate(context) {
         out.clear();
         out.show();
         var args = ['-S', 'localhost:' + port];
+
+        if (external) {
+            args = ['-S', '0.0.0.0:' + port];
+        }
+
         if (relativeurl != "") {
             args.push("-t");
             args.push(relativeurl);
