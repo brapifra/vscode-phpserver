@@ -1,96 +1,92 @@
 {
-	"name": "phpserver",
-	"displayName": "PHP Server",
-	"description": "Serve your Project with PHP",
-	"version": "1.1.0",
-	"publisher": "brapifra",
-	"engines": {
-		"vscode": "^1.5.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onCommand:extension.serveProject"
-	],
-	"main": "./extension",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/brapifra/vscode-phpserver.git"
-	},
-	"contributes": {
-		"commands": [
-			{
-				"command": "extension.serveProject",
-				"title": "Serve Project with PHP",
-				"icon": {
-					"light": "./server.svg",
-					"dark": "./server.svg"
-				}
-			},
-			{
-				"command": "extension.stopServer",
-				"title": "Stop PHP Server"
-			}
-		],
-		"configuration": {
-			"type": "object",
-			"title": "PHP Server Configuration",
-			"properties": {
-				"phpserver.port": {
-					"type": "integer",
-					"default": 3000,
-					"description": "Server Port Number"
-				},
-				"phpserver.relativeurl": {
-					"type": "string",
-					"default": "",
-					"description": "URL relative to Project (In case that you want to serve a particular folder)"
-				},
-				"phpserver.browser": {
-					"type": "string",
-					"default": "firefox",
-					"description": "Browser that will open the localhost server (Options: firefox or chrome. If empty, no browser will be opened)"
-				},
-				"phpserver.external": {
-					"type": "boolean",
-					"default": "false",
-					"description": "The server is accessible from any interface of your machine, wired or wireless, will bind to all available IP addresses on the system"
-				}
-			}
-		},
-		"menus": {
-			"editor/title": [
-				{
-					"command": "extension.serveProject",
-					"group": "navigation"
-				}
-			],
-			"editor/context": [
-				{
-					"command": "extension.serveProject",
-					"group": "navigation"
-				},
-				{
-					"command": "extension.stopServer",
-					"group": "navigation"
-				}
-			]
-		}
-	},
-	"scripts": {
-		"postinstall": "node ./node_modules/vscode/bin/install"
-	},
-	"devDependencies": {
-		"vscode": "^0.11.0"
-	},
-	"dependencies": {
-		"os": "^0.1.1"
-	},
-	"icon": "server.svg",
-	"__metadata": {
-		"id": "a8194b6b-5989-4647-a5b8-ac7085201841",
-		"publisherId": "e6e9800f-ddad-408c-803c-302d6381770b",
-		"publisherDisplayName": "brapifra"
-	}
+  "name": "phpserver",
+  "displayName": "PHP Server",
+  "description": "Serve your Project with PHP",
+  "version": "2.0.0",
+  "publisher": "brapifra",
+  "engines": {
+    "vscode": "^1.5.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onCommand:extension.serveProject"],
+  "main": "./src/extension",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brapifra/vscode-phpserver.git"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.serveProject",
+        "title": "Serve Project with PHP",
+        "icon": {
+          "light": "./src/server.svg",
+          "dark": "./src/server.svg"
+        }
+      },
+      {
+        "command": "extension.stopServer",
+        "title": "Stop PHP Server"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "PHP Server Configuration",
+      "properties": {
+        "phpserver.port": {
+          "type": "integer",
+          "default": 3000,
+          "description": "Server Port Number"
+        },
+        "phpserver.path": {
+          "type": "string",
+          "default": ".",
+          "description": "Project path (In case that you want to serve a different folder than workspace)"
+        },
+        "phpserver.browser": {
+          "type": "string",
+          "default": "firefox",
+          "description": "Select the browser that will open localhost (Options: firefox or chrome. If empty, no browser will be opened)"
+        },
+        "phpserver.external": {
+          "type": "boolean",
+          "default": false,
+          "description": "The server is accessible from any interface of your machine (remote machines)."
+        }
+      }
+    },
+    "menus": {
+      "editor/title": [
+        {
+          "command": "extension.serveProject",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "extension.serveProject",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.stopServer",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "devDependencies": {
+    "vscode": "^0.11.0"
+  },
+  "dependencies": {
+    "os": "^0.1.1"
+  },
+  "icon": "./src/server.svg",
+  "__metadata": {
+    "id": "a8194b6b-5989-4647-a5b8-ac7085201841",
+    "publisherId": "e6e9800f-ddad-408c-803c-302d6381770b",
+    "publisherDisplayName": "brapifra"
+  }
 }

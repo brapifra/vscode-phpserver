@@ -18,25 +18,28 @@ PHP installed.
 ## Extension Settings
 This extension contributes the following settings:
 
-* `phpserver.port`: Localhost port where server will be hosted (Default: 3000)
-* `phpserver.relativeurl`: URL relative to workspace path, in case you want only host a subfolder of workspace (Default: "")
-* `phpserver.browser`: Browser's name that will be opened when server starts, if value='' then no browser will be opened (Default: "firefox", Options: "chrome, firefox, ''").
-* `phpserver.external`: The server is accessible from any interface of your machine, wired or wireless, will bind to all available IP addresses on the system.
+* `phpserver.port`: Server Port Number (Default: 3000)
+* `phpserver.path`: Project path (In case that you want to serve a different folder than workspace, Default: "")
+* `phpserver.browser`: Select the browser that will open localhost (Default: "firefox", Options: "chrome, firefox, ''").
+* `phpserver.external`: The server is accessible from any interface of your machine (remote machines).
 
 
 ## Release Notes
+### 2.0.0
+* External option added
+* RelativeUrl option removed (Now is "path");
 ### 1.1.0
 Code rewritten (almost):<br>
-+Windows support.<br>
-+Auto open localhost in browser (optional).<br>
-+Added context menu commands.<br>
-+Fixed problem with relative url.<br>
+* Windows support.
+* Auto open localhost in browser (optional).
+* Added context menu commands.
+Ç Fixed problem with relative url.
 ### 1.0.0
 Initial release of PHP Server
 
-## Bugs
+## Known bugs
 
-####No console output in Windows
+#### No console output in Windows
 -----------------------------------------------------------------------------------------------------------
 
 ## For more information
