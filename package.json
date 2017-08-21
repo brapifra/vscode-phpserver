@@ -83,7 +83,7 @@
   "dependencies": {
     "os": "^0.1.1"
   },
-  "icon": "./src/server.svg",
+  "icon": "./src/server.png",
   "__metadata": {
     "id": "a8194b6b-5989-4647-a5b8-ac7085201841",
     "publisherId": "e6e9800f-ddad-408c-803c-302d6381770b",
