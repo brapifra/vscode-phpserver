@@ -1,16 +1,16 @@
 const vscode = require("vscode");
 const child = require("child_process");
 const platform = require("os").platform();
-const config = vscode.workspace.getConfiguration("phpserver");
-const relativePath = config.get("relativePath");
-const port = config.get("port");
-const ip = config.get("ip");
-let browser = config.get("browser");
+
+let port;
+let ip;
+let browser;
+
 let serverterminal;
 let browserterminal;
 
 function activate(context) {
-  checkBrowser();
+  
   const out = vscode.window.createOutputChannel("PHP Server");
   context.subscriptions.push(
     vscode.commands.registerCommand("extension.serveProject", function() {
@@ -18,6 +18,13 @@ function activate(context) {
         vscode.window.showErrorMessage("Server is already running!");
         return;
       }
+      
+      let config = vscode.workspace.getConfiguration("phpserver");
+      let relativePath = config.get("relativePath");
+      port = config.get("port");
+      ip = config.get("ip");
+      browser = config.get("browser");
+
       out.clear();
       out.show();
       const args = ["-S", `${ip}:${port}`];
@@ -47,16 +54,20 @@ function activate(context) {
         out.hide();
       });
       vscode.window.showInformationMessage("Serving Project");
+      checkBrowser();
+      if (browser !== "") {
+        browserterminal = child.exec(browser);
+      }
+    
     })
   );
+
   context.subscriptions.push(
     vscode.commands.registerCommand("extension.stopServer", deactivate)
   );
-  if (browser !== "") {
-    browserterminal = child.exec(browser);
-  }
 }
 exports.activate = activate;
+
 function deactivate() {
   if (serverterminal) {
     serverterminal.kill();
@@ -64,6 +75,7 @@ function deactivate() {
   }
 }
 exports.deactivate = deactivate;
+
 function checkBrowser() {
   switch (browser) {
     case "firefox":
