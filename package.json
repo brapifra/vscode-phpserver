@@ -59,17 +59,20 @@
       "editor/title": [
         {
           "command": "extension.serveProject",
-          "group": "navigation"
+          "group": "navigation",
+          "when": "resourceLangId == php"
         }
       ],
       "editor/context": [
         {
           "command": "extension.serveProject",
-          "group": "navigation"
+          "group": "navigation",
+          "when": "resourceLangId == php"
         },
         {
           "command": "extension.stopServer",
-          "group": "navigation"
+          "group": "navigation",
+          "when": "resourceLangId == php"
         }
       ]
     }
