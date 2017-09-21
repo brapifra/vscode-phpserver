@@ -1,16 +1,11 @@
 const vscode = require("vscode");
 const child = require("child_process");
 const platform = require("os").platform();
-const config = vscode.workspace.getConfiguration("phpserver");
-const relativePath = config.get("relativePath");
-const port = config.get("port");
-const ip = config.get("ip");
-let browser = config.get("browser");
+let config, port, ip, browser;
 let serverterminal;
 let browserterminal;
 
 function activate(context) {
-  checkBrowser();
   const out = vscode.window.createOutputChannel("PHP Server");
   context.subscriptions.push(
     vscode.commands.registerCommand("extension.serveProject", function() {
@@ -18,6 +13,12 @@ function activate(context) {
         vscode.window.showErrorMessage("Server is already running!");
         return;
       }
+
+      config = vscode.workspace.getConfiguration("phpserver");
+      let relativePath = config.get("relativePath");
+      port = config.get("port");
+      ip = config.get("ip");
+
       out.clear();
       out.show();
       const args = ["-S", `${ip}:${port}`];
@@ -35,6 +36,9 @@ function activate(context) {
       serverterminal = child.spawn("php", args, {
         cwd: vscode.workspace.rootPath
       });
+
+      checkBrowser();
+
       serverterminal.stdout.on("data", function(data) {
         out.appendLine(data.toString());
       });
@@ -52,9 +56,6 @@ function activate(context) {
   context.subscriptions.push(
     vscode.commands.registerCommand("extension.stopServer", deactivate)
   );
-  if (browser !== "") {
-    browserterminal = child.exec(browser);
-  }
 }
 exports.activate = activate;
 function deactivate() {
@@ -65,6 +66,7 @@ function deactivate() {
 }
 exports.deactivate = deactivate;
 function checkBrowser() {
+  browser = config.get("browser");
   switch (browser) {
     case "firefox":
       if (platform == "linux" || platform == "darwin") {
@@ -87,5 +89,8 @@ function checkBrowser() {
         browser = `start microsoft-edge:http://${ip}:${port}`;
       }
       break;
+  }
+  if (browser !== "") {
+    browserterminal = child.exec(browser);
   }
 }
