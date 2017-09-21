@@ -4,12 +4,14 @@ Host/Serve current workspace (or subfolder) with PHP.
 
 ## Features
 
-You can execute it with:<br>
--Ctrl+shift+P and searching for "Serve Project with PHP"<br>
--Clicking on the editor's button (right superior corner)<br>
--Right-clicking on the editor.<br>
-To stop the server just search for "Stop PHP Server" or right-click on the editor.<br>
-Now with Windows support, auto open localhost in browser.<br>
+You can execute it with:
+- Ctrl+shift+P and searching for "Serve Project with PHP"
+- Clicking on the editor's button (right superior corner)
+- Right-clicking on the editor.
+
+To stop the server just search for "Stop PHP Server" or right-click on the editor.
+
+Now with Windows support, auto open localhost in browser.
 
 ## Requirements
 
@@ -25,17 +27,20 @@ This extension contributes the following settings:
 
 
 ## Release Notes
+### 2.0.1
+* Browser is opened every time server is started
+* Settings' changes are applied without restart the VScode editor
 ### 2.0.0
 * **Windows console output fixed**
 * IP option added
 * RelativeUrl option removed (Now is "relativePath");
 * Microsoft edge browser added
 ### 1.1.0
-Code rewritten (almost):<br>
+Code rewritten (almost):
 * Windows support.
 * Auto open localhost in browser (optional).
 * Added context menu commands.
-Ç Fixed problem with relative url.
+* Fixed problem with relative url.
 ### 1.0.0
 Initial release of PHP Server
 
