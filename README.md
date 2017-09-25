@@ -11,7 +11,11 @@ You can execute it with:
 
 To stop the server just search for "Stop PHP Server" or right-click on the editor.
 
-Now with Windows support, auto open localhost in browser.
+Now with Windows support, auto open localhost in browser and custom router script option added.
+
+### Custom router script
+
+If a custom router script is used on a Windows platform, there will be no console output unless a logger like [this](src/logger.php) is included in the script.
 
 ## Requirements
 
@@ -22,11 +26,13 @@ This extension contributes the following settings:
 
 * `phpserver.port`: Server Port Number (Default: 3000)
 * `phpserver.relativePath`: Path relative to project (In case that you want to serve a different folder than workspace, Default: "")
-* `phpserver.browser`: Select the browser that will open localhost (Default: "firefox", Options: "chrome, firefox, edge, ''").
-* `phpserver.ip`: Server IP ('localhost', '0.0.0.0', ...).
-
+* `phpserver.browser`: Select the browser that will open localhost (Default: "firefox", Options: "chrome, firefox, edge, ''")
+* `phpserver.ip`: Server IP ('localhost', '0.0.0.0', ...)
+* `phpserver.router`: Specify the location of your custom router script ('router.php', '/home/user/router.php'...)
 
 ## Release Notes
+### 2.1.0
+* Custom router script option added
 ### 2.0.1
 * Browser is opened every time server is started
 * Settings' changes are applied without restart the VScode editor

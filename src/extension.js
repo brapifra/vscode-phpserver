@@ -16,6 +16,7 @@ function activate(context) {
 
       config = vscode.workspace.getConfiguration("phpserver");
       let relativePath = config.get("relativePath");
+      let router = config.get("router");
       port = config.get("port");
       ip = config.get("ip");
 
@@ -26,7 +27,9 @@ function activate(context) {
         args.push("-t");
         args.push(relativePath);
       }
-      if (platform == "win32") {
+      if (router !== "") {
+        args.push(router);
+      }else if (platform == "win32") {
         args.push(`${context.extensionPath}\\src\\logger.php`);
         if (relativePath != "") {
           process.env.PHP_SERVER_RELATIVE_PATH = relativePath;

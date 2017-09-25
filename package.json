@@ -2,7 +2,7 @@
   "name": "phpserver",
   "displayName": "PHP Server",
   "description": "Serve your Project with PHP",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "publisher": "brapifra",
   "engines": {
     "vscode": "^1.5.0"
@@ -52,6 +52,11 @@
           "type": "string",
           "default": "localhost",
           "description": "Server IP ('localhost','0.0.0.0',...)"
+        },
+        "phpserver.router": {
+          "type": "string",
+          "default": "",
+          "description": "Specify the location of your custom router script ('router.php', '/home/user/router.php'...)"
         }
       }
     },
