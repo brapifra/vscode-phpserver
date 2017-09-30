@@ -47,6 +47,7 @@ function activate(context) {
       });
       serverterminal.stderr.on("data", function(data) {
         out.appendLine(data.toString());
+        vscode.window.showErrorMessage(`Server error: ${data.toString()}`);
       });
       serverterminal.on("close", function(code) {
         vscode.window.showInformationMessage("Server Stopped");
