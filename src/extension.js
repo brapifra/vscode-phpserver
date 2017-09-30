@@ -15,8 +15,9 @@ function activate(context) {
       }
 
       config = vscode.workspace.getConfiguration("phpserver");
-      let relativePath = config.get("relativePath");
-      let router = config.get("router");
+      const relativePath = config.get("relativePath");
+      const router = config.get("router");
+      const phpPath = config.get("phpPath");
       port = config.get("port");
       ip = config.get("ip");
 
@@ -29,14 +30,14 @@ function activate(context) {
       }
       if (router !== "") {
         args.push(router);
-      }else if (platform == "win32") {
+      } else if (platform == "win32") {
         args.push(`${context.extensionPath}\\src\\logger.php`);
         if (relativePath != "") {
           process.env.PHP_SERVER_RELATIVE_PATH = relativePath;
         }
       }
 
-      serverterminal = child.spawn("php", args, {
+      serverterminal = child.spawn(phpPath !== null ? phpPath : "php", args, {
         cwd: vscode.workspace.rootPath
       });
 
@@ -47,12 +48,13 @@ function activate(context) {
       });
       serverterminal.stderr.on("data", function(data) {
         out.appendLine(data.toString());
-        vscode.window.showErrorMessage(`Server error: ${data.toString()}`);
+      });
+      serverterminal.on("error", err => {
+        vscode.window.showErrorMessage(`Server error: ${err.message}`);
       });
       serverterminal.on("close", function(code) {
         vscode.window.showInformationMessage("Server Stopped");
         deactivate();
-        out.hide();
       });
       vscode.window.showInformationMessage("Serving Project");
     })

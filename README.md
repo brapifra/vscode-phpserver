@@ -29,8 +29,12 @@ This extension contributes the following settings:
 * `phpserver.browser`: Select the browser that will open localhost (Default: "firefox", Options: "chrome, firefox, edge, ''")
 * `phpserver.ip`: Server IP ('localhost', '0.0.0.0', ...)
 * `phpserver.router`: Specify the location of your custom router script ('router.php', '/home/user/router.php'...)
+* `phpserver.phpPath`: Specify the location of your PHP executable. If empty, the extension will use the PHP executable which appears in the $PATH environment variable
 
 ## Release Notes
+### 2.2.0
+* The path of the PHP executable can be configured
+* Error details are shown in a message (Only server errors)
 ### 2.1.1
 * Error details are shown in a message
 ### 2.1.0
