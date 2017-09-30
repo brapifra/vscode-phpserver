@@ -31,6 +31,8 @@ This extension contributes the following settings:
 * `phpserver.router`: Specify the location of your custom router script ('router.php', '/home/user/router.php'...)
 
 ## Release Notes
+### 2.1.1
+* Error details are shown in a message
 ### 2.1.0
 * Custom router script option added
 ### 2.0.1
