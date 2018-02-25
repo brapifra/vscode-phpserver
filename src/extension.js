@@ -8,7 +8,7 @@ let browserterminal;
 function activate(context) {
   const out = vscode.window.createOutputChannel("PHP Server");
   context.subscriptions.push(
-    vscode.commands.registerCommand("extension.serveProject", function() {
+    vscode.commands.registerCommand("extension.serveProject", function () {
       if (serverterminal) {
         vscode.window.showErrorMessage("Server is already running!");
         return;
@@ -43,16 +43,16 @@ function activate(context) {
 
       checkBrowser();
 
-      serverterminal.stdout.on("data", function(data) {
+      serverterminal.stdout.on("data", function (data) {
         out.appendLine(data.toString());
       });
-      serverterminal.stderr.on("data", function(data) {
+      serverterminal.stderr.on("data", function (data) {
         out.appendLine(data.toString());
       });
       serverterminal.on("error", err => {
         vscode.window.showErrorMessage(`Server error: ${err.message}`);
       });
-      serverterminal.on("close", function(code) {
+      serverterminal.on("close", function (code) {
         vscode.window.showInformationMessage("Server Stopped");
         deactivate();
       });
@@ -73,28 +73,42 @@ function deactivate() {
 exports.deactivate = deactivate;
 function checkBrowser() {
   browser = config.get("browser");
-  switch (browser) {
+  switch (browser.toLowerCase()) {
     case "firefox":
-      if (platform == "linux" || platform == "darwin") {
+      if (platform === 'linux') {
         browser = `${browser} http://${ip}:${port}`;
       } else if (platform == "win32") {
         browser = `start ${browser} http://${ip}:${port}`;
+      } else if (platform === 'darwin') {
+        browser = `open -a "Firefox" http://${ip}:${port}`;
+      } else {
+        browser = '';
       }
       break;
     case "chrome":
-      if (platform == "linux" || platform == "darwin") {
+      if (platform === 'linux') {
         browser = `google-chrome http://${ip}:${port}`;
       } else if (platform == "win32") {
         browser = `start ${browser} http://${ip}:${port}`;
+      } else if (platform === 'darwin') {
+        browser = `open -a "Google Chrome" http://${ip}:${port}`;
+      } else {
+        browser = '';
       }
       break;
     case "edge":
-      if (platform == "linux" || platform == "darwin") {
-        browser = "";
-      } else if (platform == "win32") {
+      if (platform === 'win32') {
         browser = `start microsoft-edge:http://${ip}:${port}`;
+      } else {
+        browser = '';
       }
       break;
+    case "safari":
+      if (platform === 'darwin') {
+        browser = `open -a "Safari" http://${ip}:${port}`;
+      } else {
+        browser = '';
+      }
   }
   if (browser !== "") {
     browserterminal = child.exec(browser);

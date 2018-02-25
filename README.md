@@ -26,12 +26,14 @@ This extension contributes the following settings:
 
 * `phpserver.port`: Server Port Number (Default: 3000)
 * `phpserver.relativePath`: Path relative to project (In case that you want to serve a different folder than workspace, Default: "")
-* `phpserver.browser`: Select the browser that will open localhost (Default: "firefox", Options: "chrome, firefox, edge, ''")
+* `phpserver.browser`: Select the browser that will open localhost (Default: "firefox", Options: "chrome, firefox, edge, safari, '' ")
 * `phpserver.ip`: Server IP ('localhost', '0.0.0.0', ...)
 * `phpserver.router`: Specify the location of your custom router script ('router.php', '/home/user/router.php'...)
 * `phpserver.phpPath`: Specify the location of your PHP executable. If empty, the extension will use the PHP executable which appears in the $PATH environment variable
 
 ## Release Notes
+### 2.2.1
+* Fixed "auto launch browser" option in Mac devices (#21). Now Safari is supported.
 ### 2.2.0
 * The path of the PHP executable can be configured
 * Error details are shown in a message (Only server errors)
