@@ -2,7 +2,7 @@
   "name": "phpserver",
   "displayName": "PHP Server",
   "description": "Serve your Project with PHP",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "publisher": "brapifra",
   "engines": {
     "vscode": "^1.5.0"
