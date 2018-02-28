@@ -1,102 +1,111 @@
 {
-  "name": "phpserver",
-  "displayName": "PHP Server",
-  "description": "Serve your Project with PHP",
-  "version": "2.2.1",
-  "publisher": "brapifra",
-  "engines": {
-    "vscode": "^1.5.0"
-  },
-  "categories": ["Other"],
-  "activationEvents": ["onCommand:extension.serveProject"],
-  "main": "./src/extension",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/brapifra/vscode-phpserver.git"
-  },
-  "contributes": {
-    "commands": [
-      {
-        "command": "extension.serveProject",
-        "title": "Serve Project with PHP",
-        "icon": {
-          "light": "./src/server.svg",
-          "dark": "./src/server.svg"
-        }
-      },
-      {
-        "command": "extension.stopServer",
-        "title": "Stop PHP Server"
-      }
-    ],
-    "configuration": {
-      "type": "object",
-      "title": "PHP Server Configuration",
-      "properties": {
-        "phpserver.port": {
-          "type": "integer",
-          "default": 3000,
-          "description": "Server Port Number"
-        },
-        "phpserver.relativePath": {
-          "type": "string",
-          "default": ".",
-          "description": "Path relative to project (In case that you want to serve a different folder than workspace)"
-        },
-        "phpserver.browser": {
-          "type": "string",
-          "default": "chrome",
-          "description": "Select the browser that will open localhost (Options: firefox, chrome or edge. If empty, no browser will be opened)"
-        },
-        "phpserver.ip": {
-          "type": "string",
-          "default": "localhost",
-          "description": "Server IP ('localhost','0.0.0.0',...)"
-        },
-        "phpserver.router": {
-          "type": "string",
-          "default": "",
-          "description": "Specify the location of your custom router script ('router.php', '/home/user/router.php'...)"
-        },
-        "phpserver.phpPath": {
-          "type": "string",
-          "default": null,
-          "description": "Specify the location of your PHP executable. If empty, the extension will use the PHP executable which appears in the $PATH environment variable"
-        }
-      }
-    },
-    "menus": {
-      "editor/title": [
-        {
-          "command": "extension.serveProject",
-          "group": "navigation"
-        }
-      ],
-      "editor/context": [
-        {
-          "command": "extension.serveProject",
-          "group": "navigation"
-        },
-        {
-          "command": "extension.stopServer",
-          "group": "navigation"
-        }
-      ]
-    }
-  },
-  "scripts": {
-    "postinstall": "node ./node_modules/vscode/bin/install"
-  },
-  "devDependencies": {
-    "vscode": "^0.11.0"
-  },
-  "dependencies": {
-    "os": "^0.1.1"
-  },
-  "icon": "src/server.png",
-  "__metadata": {
-    "id": "a8194b6b-5989-4647-a5b8-ac7085201841",
-    "publisherId": "e6e9800f-ddad-408c-803c-302d6381770b",
-    "publisherDisplayName": "brapifra"
-  }
+	"name": "phpserver",
+	"displayName": "PHP Server",
+	"description": "Serve your Project with PHP",
+	"version": "2.2.1",
+	"publisher": "brapifra",
+	"engines": {
+		"vscode": "^1.5.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.serveProject"
+	],
+	"main": "./src/extension",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/brapifra/vscode-phpserver.git"
+	},
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.serveProject",
+				"title": "Serve Project with PHP",
+				"icon": {
+					"light": "./src/server.svg",
+					"dark": "./src/server.svg"
+				}
+			},
+			{
+				"command": "extension.stopServer",
+				"title": "Stop PHP Server"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "PHP Server Configuration",
+			"properties": {
+				"phpserver.port": {
+					"type": "integer",
+					"default": 3000,
+					"description": "Server Port Number"
+				},
+				"phpserver.relativePath": {
+					"type": "string",
+					"default": ".",
+					"description": "Path relative to project (In case that you want to serve a different folder than workspace)"
+				},
+				"phpserver.browser": {
+					"type": "string",
+					"default": "chrome",
+					"description": "Select the browser that will open localhost (Options: firefox, chrome or edge. If empty, no browser will be opened)"
+				},
+				"phpserver.ip": {
+					"type": "string",
+					"default": "localhost",
+					"description": "Server IP ('localhost','0.0.0.0',...)"
+				},
+				"phpserver.router": {
+					"type": "string",
+					"default": "",
+					"description": "Specify the location of your custom router script ('router.php', '/home/user/router.php'...)"
+				},
+				"phpserver.phpPath": {
+					"type": "string",
+					"default": null,
+					"description": "Specify the location of your PHP executable. If empty, the extension will use the PHP executable which appears in the $PATH environment variable"
+				},
+				"phpserver.MultiWorkSpace": {
+					"type": "boolean",
+					"default": false,
+					"description": "Specify if the extension ask for another folder in the workspace"
+				}
+			}
+		},
+		"menus": {
+			"editor/title": [
+				{
+					"command": "extension.serveProject",
+					"group": "navigation"
+				}
+			],
+			"editor/context": [
+				{
+					"command": "extension.serveProject",
+					"group": "navigation"
+				},
+				{
+					"command": "extension.stopServer",
+					"group": "navigation"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"postinstall": "node ./node_modules/vscode/bin/install"
+	},
+	"devDependencies": {
+		"vscode": "^0.11.0"
+	},
+	"dependencies": {
+		"os": "^0.1.1"
+	},
+	"icon": "src/server.png",
+	"__metadata": {
+		"id": "a8194b6b-5989-4647-a5b8-ac7085201841",
+		"publisherId": "e6e9800f-ddad-408c-803c-302d6381770b",
+		"publisherDisplayName": "brapifra"
+	}
 }
