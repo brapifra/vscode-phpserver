@@ -112,6 +112,17 @@ function checkBrowser() {
         browser = '';
       }
       break;
+    case "opera":
+      if (platform === 'linux') {
+        browser = `google-chrome http://${ip}:${port}`;
+      } else if (platform == "win32") {
+        browser = `start ${browser} http://${ip}:${port}`;
+      } else if (platform === 'darwin') {
+        browser = `open -a "Google Chrome" http://${ip}:${port}`;
+      } else {
+        browser = '';
+      }
+      break;
     case "edge":
       if (platform === 'win32') {
         browser = `start microsoft-edge:http://${ip}:${port}`;
