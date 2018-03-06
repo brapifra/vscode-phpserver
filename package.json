@@ -70,7 +70,12 @@
 				"phpserver.MultiWorkSpace": {
 					"type": "boolean",
 					"default": false,
-					"description": "Specify if the extension ask for another folder in the workspace"
+					"description": "Specifies whether the extension should contemplate a multi-directory environment or not"
+				},
+				"phpserver.LaunchBrowserIfStarted": {
+					"type": "boolean",
+					"default": false,
+					"description": "Specifies whether the extension should launch browser when clicked in 'Serve Project with PHP' and server already opened, or will show a error message"
 				}
 			}
 		},

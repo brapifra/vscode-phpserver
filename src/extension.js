@@ -9,12 +9,15 @@ let browserterminal;
 function activate(context) {
   context.subscriptions.push(
     vscode.commands.registerCommand("extension.serveProject", function () {
+      config = vscode.workspace.getConfiguration("phpserver");
       if (serverterminal) {
-        vscode.window.showErrorMessage("Server is already running!");
+        const BrowserAlready = config.get("LaunchBrowserIfStarted");
+        if(BrowserAlready==false)
+          vscode.window.showErrorMessage("Server is already running!");
+        else
+          checkBrowser();
         return;
       }
-
-      config = vscode.workspace.getConfiguration("phpserver");
       const relativePath = config.get("relativePath");
       const router = config.get("router");
       const phpPath = config.get("phpPath");
