@@ -1,23 +1,27 @@
 const vscode = require("vscode");
 const child = require("child_process");
 const platform = require("os").platform();
+const out = vscode.window.createOutputChannel("PHP Server");;
 let config, port, ip, browser;
 let serverterminal;
 let browserterminal;
 
 function activate(context) {
-  const out = vscode.window.createOutputChannel("PHP Server");
   context.subscriptions.push(
     vscode.commands.registerCommand("extension.serveProject", function () {
+      config = vscode.workspace.getConfiguration("phpserver");
       if (serverterminal) {
-        vscode.window.showErrorMessage("Server is already running!");
+        const BrowserAlready = config.get("LaunchBrowserIfStarted");
+        if(BrowserAlready==false)
+          vscode.window.showErrorMessage("Server is already running!");
+        else
+          checkBrowser();
         return;
       }
-
-      config = vscode.workspace.getConfiguration("phpserver");
       const relativePath = config.get("relativePath");
       const router = config.get("router");
       const phpPath = config.get("phpPath");
+      const wsPHP = config.get("MultiWorkSpace");
       port = config.get("port");
       ip = config.get("ip");
 
@@ -36,32 +40,47 @@ function activate(context) {
           process.env.PHP_SERVER_RELATIVE_PATH = relativePath;
         }
       }
-
-      serverterminal = child.spawn(phpPath !== null ? phpPath : "php", args, {
-        cwd: vscode.workspace.rootPath
-      });
-
-      checkBrowser();
-
-      serverterminal.stdout.on("data", function (data) {
-        out.appendLine(data.toString());
-      });
-      serverterminal.stderr.on("data", function (data) {
-        out.appendLine(data.toString());
-      });
-      serverterminal.on("error", err => {
-        vscode.window.showErrorMessage(`Server error: ${err.message}`);
-      });
-      serverterminal.on("close", function (code) {
-        vscode.window.showInformationMessage("Server Stopped");
-        deactivate();
-      });
-      vscode.window.showInformationMessage("Serving Project");
+      let folder = vscode.workspace.workspaceFolders[0];
+      if(wsPHP !== false)
+      {
+        vscode.window.showWorkspaceFolderPick().then(function(folder)
+          {
+            servidor(phpPath,args,folder);
+          });
+      }else{
+          servidor(phpPath,args,folder);        
+      }
     })
   );
   context.subscriptions.push(
     vscode.commands.registerCommand("extension.stopServer", deactivate)
   );
+}
+function servidor(phpPath,args,folder)
+{
+  if(typeof folder == "OBJECT")
+    folder = folder.uri.fsPath;
+  serverterminal = child.spawn(phpPath !== null ? phpPath : "php", args, {
+    cwd: folder.uri.fsPath
+  });
+  
+  console.log(folder.uri.fsPath);
+  checkBrowser();
+
+  serverterminal.stdout.on("data", function (data) {
+    out.appendLine(data.toString());
+  });
+  serverterminal.stderr.on("data", function (data) {
+    out.appendLine(data.toString());
+  });
+  serverterminal.on("error", err => {
+    vscode.window.showErrorMessage(`Server error: ${err.message}`);
+  });
+  serverterminal.on("close", function (code) {
+    vscode.window.showInformationMessage("Server Stopped");
+    deactivate();
+  });
+  vscode.window.showInformationMessage("Serving Project");
 }
 exports.activate = activate;
 function deactivate() {
@@ -86,6 +105,17 @@ function checkBrowser() {
       }
       break;
     case "chrome":
+      if (platform === 'linux') {
+        browser = `google-chrome http://${ip}:${port}`;
+      } else if (platform == "win32") {
+        browser = `start ${browser} http://${ip}:${port}`;
+      } else if (platform === 'darwin') {
+        browser = `open -a "Google Chrome" http://${ip}:${port}`;
+      } else {
+        browser = '';
+      }
+      break;
+    case "opera":
       if (platform === 'linux') {
         browser = `google-chrome http://${ip}:${port}`;
       } else if (platform == "win32") {

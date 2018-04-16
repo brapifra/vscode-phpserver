@@ -30,8 +30,15 @@ This extension contributes the following settings:
 * `phpserver.ip`: Server IP ('localhost', '0.0.0.0', ...)
 * `phpserver.router`: Specify the location of your custom router script ('router.php', '/home/user/router.php'...)
 * `phpserver.phpPath`: Specify the location of your PHP executable. If empty, the extension will use the PHP executable which appears in the $PATH environment variable
+* `phpserver.MultiWorkSpace`: Specifies whether the extension should contemplate a multi-directory environment or not
+* `phpserver.LaunchBrowserIfStarted`: Specifies whether the extension should launch browser when clicked in 'Serve Project with PHP' and server already opened, or will show a error message
 
 ## Release Notes
+### Fork (2.2.3)
+* Added Launch Browser option. If you click on the display button once more, this option allows you to choose between launching the browser with the web address of the created server, or continuing with the old functionality that consisted in displaying an error message.
+### Fork (2.2.2)
+* Added Multi-Workspace support
+* Added Opera option for browser deploy
 ### 2.2.1
 * Fixed "auto launch browser" option in Mac devices (#21). Now Safari is supported.
 ### 2.2.0
