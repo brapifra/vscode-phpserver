@@ -32,6 +32,10 @@ This extension contributes the following settings:
 * `phpserver.phpPath`: Specify the location of your PHP executable. If empty, the extension will use the PHP executable which appears in the $PATH environment variable
 
 ## Release Notes
+### 2.3
+* TypeScript Port
+* 'Reload Server' option
+* Auto open current file in browser
 ### 2.2.1
 * Fixed "auto launch browser" option in Mac devices (#21). Now Safari is supported.
 ### 2.2.0
