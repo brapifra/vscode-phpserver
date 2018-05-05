@@ -2,7 +2,7 @@
   "name": "phpserver",
   "displayName": "PHP Server",
   "description": "Serve your Project with PHP",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "publisher": "brapifra",
   "engines": {
     "vscode": "^1.5.0"
@@ -12,6 +12,7 @@
   ],
   "activationEvents": [
     "onCommand:extension.serveProject",
+    "onCommand:extension.openFileInBrowser",
     "onCommand:extension.reloadServer"
   ],
   "main": "./out/extension",
@@ -32,6 +33,10 @@
       {
         "command": "extension.reloadServer",
         "title": "PHP Server: Reload Server"
+      },
+      {
+        "command": "extension.openFileInBrowser",
+        "title": "PHP Server: Open file in Browser"
       },
       {
         "command": "extension.stopServer",
@@ -71,6 +76,11 @@
           "type": "string",
           "default": null,
           "description": "Specify the location of your PHP executable. If empty, the extension will use the PHP executable which appears in the $PATH environment variable"
+        },
+        "phpserver.autoOpenOnReload": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically opens file in browser after server reload"
         }
       }
     },
@@ -84,15 +94,19 @@
       "editor/context": [
         {
           "command": "extension.serveProject",
-          "group": "navigation"
+          "group": "navigation@1"
         },
         {
           "command": "extension.reloadServer",
-          "group": "navigation"
+          "group": "navigation@1.01"
+        },
+        {
+          "command": "extension.openFileInBrowser",
+          "group": "navigation@1.02"
         },
         {
           "command": "extension.stopServer",
-          "group": "navigation"
+          "group": "navigation@1.03"
         }
       ]
     }

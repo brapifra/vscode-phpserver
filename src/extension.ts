@@ -16,10 +16,23 @@ export function activate(context: vscode.ExtensionContext) {
   );
   subscriptions.push(
     vscode.commands.registerCommand("extension.reloadServer", function () {
+      const reloading = server && server.isRunning();
       if (server) {
         server.shutDown();
       }
-      createServer(context.extensionPath);
+      createServer(context.extensionPath, reloading);
+    })
+  );
+  subscriptions.push(
+    vscode.commands.registerCommand("extension.openFileInBrowser", function () {
+      if (!server || !server.isRunning()) {
+        vscode.window.showErrorMessage("Server is not running!");
+        return;
+      }
+      const config = vscode.workspace.getConfiguration("phpserver");
+      server.execBrowser(config.get<string>('browser'),
+        vscode.window.activeTextEditor ?
+          vscode.window.activeTextEditor.document.fileName : undefined);
     })
   );
   subscriptions.push(
@@ -33,7 +46,7 @@ export function deactivate() {
   }
 }
 
-function createServer(extensionPath: string) {
+function createServer(extensionPath: string, reloading?: boolean) {
   const config = vscode.workspace.getConfiguration("phpserver");
   const relativePath = config.get<string>("relativePath");
   const router = config.get<string>("router");
@@ -44,7 +57,12 @@ function createServer(extensionPath: string) {
   server = new Server(ip, port, relativePath, extensionPath);
   server.setRouter(router);
   server.setPhpPath(phpPath);
+
+  if (reloading && !config.get<boolean>("autoOpenOnReload")) {
+    return;
+  }
+  
   server.execBrowser(config.get<string>('browser'),
     vscode.window.activeTextEditor ?
-      vscode.window.activeTextEditor.document.fileName : null);
+      vscode.window.activeTextEditor.document.fileName : undefined);
 }

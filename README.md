@@ -30,9 +30,13 @@ This extension contributes the following settings:
 * `phpserver.ip`: Server IP ('localhost', '0.0.0.0', ...)
 * `phpserver.router`: Specify the location of your custom router script ('router.php', '/home/user/router.php'...)
 * `phpserver.phpPath`: Specify the location of your PHP executable. If empty, the extension will use the PHP executable which appears in the $PATH environment variable
+* `phpserver.autoOpenOnReload`: Automatically opens current file in browser after server reload
 
 ## Release Notes
-### 2.3
+### 2.4.0
+* 'autoOpenOnReload' option added
+* 'openFileInBrowser' command added
+### 2.3.0
 * TypeScript Port
 * 'Reload Server' option
 * Auto open current file in browser
