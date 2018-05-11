@@ -142,8 +142,8 @@ export default class Server {
     if (this.relativePath.length > 1) {
       const fullRelativePath = vscode.workspace.rootPath + '/' + this.relativePath;
       i = fullFileName.indexOf(fullRelativePath) + fullRelativePath.length;
-      if (!fullRelativePath.endsWith("/")) {
-        i++;
+      if (fullRelativePath.endsWith("/")) {
+        i--;
       }
     } else {
       i = fullFileName.indexOf(vscode.workspace.rootPath) + vscode.workspace.rootPath.length + 1;
