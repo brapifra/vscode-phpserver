@@ -33,6 +33,8 @@ This extension contributes the following settings:
 * `phpserver.autoOpenOnReload`: Automatically opens current file in browser after server reload
 
 ## Release Notes
+### 2.4.1
+* Fix router setting
 ### 2.4.0
 * 'autoOpenOnReload' option added
 * 'openFileInBrowser' command added
