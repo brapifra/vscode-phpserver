@@ -61,7 +61,7 @@ function createServer(extensionPath: string, reloading?: boolean) {
   if (reloading && !config.get<boolean>("autoOpenOnReload")) {
     return;
   }
-  
+  server.run();
   server.execBrowser(config.get<string>('browser'),
     vscode.window.activeTextEditor ?
       vscode.window.activeTextEditor.document.fileName : undefined);
