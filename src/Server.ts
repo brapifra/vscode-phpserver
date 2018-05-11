@@ -18,7 +18,6 @@ export default class Server {
     this.port = port;
     this.relativePath = relativePath;
     this.extensionPath = extensionPath;
-    this.run();
   }
 
   public shutDown() {
@@ -41,7 +40,7 @@ export default class Server {
     this.router = router;
   }
 
-  private run() {
+  public run() {
     if (this.isRunning()) {
       vscode.window.showErrorMessage("Server is already running!");
       return;
@@ -140,7 +139,7 @@ export default class Server {
     }
 
     let i = 0;
-    if (this.relativePath.length !== 1) {
+    if (this.relativePath.length > 1) {
       const fullRelativePath = vscode.workspace.rootPath + '/' + this.relativePath;
       i = fullFileName.indexOf(fullRelativePath) + fullRelativePath.length;
       if (!fullRelativePath.endsWith("/")) {
@@ -149,7 +148,7 @@ export default class Server {
     } else {
       i = fullFileName.indexOf(vscode.workspace.rootPath) + vscode.workspace.rootPath.length + 1;
     }
-
+    
     return fullFileName.substring(i);
   }
 }
