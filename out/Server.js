@@ -126,9 +126,14 @@ class Server {
         }
         let i = 0;
         if (this.relativePath.length > 1) {
-            const fullRelativePath = vscode.workspace.rootPath + '/' + this.relativePath;
+            let char = os_1.platform() === 'win32' ? '\\' : '/';
+            let relativePath = this.relativePath;
+            if (relativePath.startsWith('.' + char)) {
+                relativePath = relativePath.substring(2);
+            }
+            const fullRelativePath = vscode.workspace.rootPath + char + relativePath;
             i = fullFileName.indexOf(fullRelativePath) + fullRelativePath.length;
-            if (!fullRelativePath.endsWith("/")) {
+            if (!fullRelativePath.endsWith(char)) {
                 i++;
             }
         }
