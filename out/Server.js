@@ -11,7 +11,6 @@ class Server {
         this.port = port;
         this.relativePath = relativePath;
         this.extensionPath = extensionPath;
-        this.run();
     }
     shutDown() {
         if (this.running && this.terminal !== undefined) {
@@ -126,7 +125,7 @@ class Server {
             return '';
         }
         let i = 0;
-        if (this.relativePath.length !== 1) {
+        if (this.relativePath.length > 1) {
             const fullRelativePath = vscode.workspace.rootPath + '/' + this.relativePath;
             i = fullFileName.indexOf(fullRelativePath) + fullRelativePath.length;
             if (!fullRelativePath.endsWith("/")) {

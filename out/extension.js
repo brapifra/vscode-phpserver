@@ -47,6 +47,7 @@ function createServer(extensionPath, reloading) {
     server = new Server_1.default(ip, port, relativePath, extensionPath);
     server.setRouter(router);
     server.setPhpPath(phpPath);
+    server.run();
     if (reloading && !config.get("autoOpenOnReload")) {
         return;
     }
