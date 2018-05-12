@@ -57,13 +57,13 @@ function createServer(extensionPath: string, reloading?: boolean) {
   server = new Server(ip, port, relativePath, extensionPath);
   server.setRouter(router);
   server.setPhpPath(phpPath);
-  server.run();
+  server.run(() => {
+    if (reloading && !config.get<boolean>("autoOpenOnReload")) {
+      return;
+    }
 
-  if (reloading && !config.get<boolean>("autoOpenOnReload")) {
-    return;
-  }
-  
-  server.execBrowser(config.get<string>('browser'),
-    vscode.window.activeTextEditor ?
-      vscode.window.activeTextEditor.document.fileName : undefined);
+    server.execBrowser(config.get<string>('browser'),
+      vscode.window.activeTextEditor ?
+        vscode.window.activeTextEditor.document.fileName : undefined);
+  });
 }

@@ -28,7 +28,7 @@ class Server {
     setRouter(router) {
         this.router = router;
     }
-    run() {
+    run(cb) {
         if (this.isRunning()) {
             vscode.window.showErrorMessage("Server is already running!");
             return;
@@ -45,6 +45,7 @@ class Server {
             this.outputChanneL.appendLine(data.toString());
         });
         this.terminal.on("error", (err) => {
+            this.running = false;
             vscode.window.showErrorMessage(`Server error: ${err.stack}`);
         });
         this.terminal.on("close", code => {
@@ -52,6 +53,7 @@ class Server {
             vscode.window.showInformationMessage("Server Stopped");
         });
         this.running = true;
+        cb();
         vscode.window.showInformationMessage("Serving Project");
     }
     argsToArray() {
@@ -140,7 +142,8 @@ class Server {
         else {
             i = fullFileName.indexOf(vscode.workspace.rootPath) + vscode.workspace.rootPath.length + 1;
         }
-        return fullFileName.substring(i);
+        const ret = fullFileName.substring(i);
+        return ret.replace(new RegExp(/\s/g), "%20");
     }
 }
 exports.default = Server;

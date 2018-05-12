@@ -40,7 +40,7 @@ export default class Server {
     this.router = router;
   }
 
-  public run() {
+  public run(cb: Function) {
     if (this.isRunning()) {
       vscode.window.showErrorMessage("Server is already running!");
       return;
@@ -60,6 +60,7 @@ export default class Server {
       this.outputChanneL.appendLine(data.toString());
     });
     this.terminal.on("error", (err: Error) => {
+      this.running = false;
       vscode.window.showErrorMessage(`Server error: ${err.stack}`);
     });
     this.terminal.on("close", code => {
@@ -68,6 +69,7 @@ export default class Server {
     });
 
     this.running = true;
+    cb();
     vscode.window.showInformationMessage("Serving Project");
   }
 
@@ -144,7 +146,7 @@ export default class Server {
       let char = platform() === 'win32' ? '\\' : '/';
       let relativePath = this.relativePath;
       if (relativePath.startsWith('.' + char)) {
-        relativePath=relativePath.substring(2);
+        relativePath = relativePath.substring(2);
       }
       const fullRelativePath = vscode.workspace.rootPath + char + relativePath;
       i = fullFileName.indexOf(fullRelativePath) + fullRelativePath.length;
@@ -154,7 +156,7 @@ export default class Server {
     } else {
       i = fullFileName.indexOf(vscode.workspace.rootPath) + vscode.workspace.rootPath.length + 1;
     }
-    
-    return fullFileName.substring(i);
+    const ret = fullFileName.substring(i);
+    return ret.replace(new RegExp(/\s/g),"%20");
   }
 }

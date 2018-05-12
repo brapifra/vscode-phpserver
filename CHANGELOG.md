@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.4.4
+* Fix #30 and #31
+
 ### 2.4.3
 * Fix relative path setting in Windows devices
 
