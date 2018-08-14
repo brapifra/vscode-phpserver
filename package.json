@@ -21,9 +21,8 @@
     "url": "https://github.com/brapifra/vscode-phpserver.git"
   },
   "contributes": {
-    "commands": [
-      {
-        "command": "extension.serveProject",
+    "commands": [{
+        "command": "extension.phpServer.serveProject",
         "title": "PHP Server: Serve Project",
         "icon": {
           "light": "./src/server.svg",
@@ -31,15 +30,15 @@
         }
       },
       {
-        "command": "extension.reloadServer",
+        "command": "extension.phpServer.reloadServer",
         "title": "PHP Server: Reload Server"
       },
       {
-        "command": "extension.openFileInBrowser",
+        "command": "extension.phpServer.openFileInBrowser",
         "title": "PHP Server: Open file in Browser"
       },
       {
-        "command": "extension.stopServer",
+        "command": "extension.phpServer.stopServer",
         "title": "PHP Server: Stop"
       }
     ],
@@ -85,14 +84,11 @@
       }
     },
     "menus": {
-      "editor/title": [
-        {
-          "command": "extension.serveProject",
-          "group": "navigation"
-        }
-      ],
-      "editor/context": [
-        {
+      "editor/title": [{
+        "command": "extension.serveProject",
+        "group": "navigation"
+      }],
+      "editor/context": [{
           "command": "extension.serveProject",
           "group": "navigation@1"
         },
