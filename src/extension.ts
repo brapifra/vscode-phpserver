@@ -1,42 +1,57 @@
-import * as vscode from 'vscode';
-import Server from './Server';
+import * as vscode from "vscode";
+import Server from "./Server";
 let server: Server;
 
 export function activate(context: vscode.ExtensionContext) {
   const subscriptions = context.subscriptions as any;
 
   subscriptions.push(
-    vscode.commands.registerCommand("extension.serveProject", function () {
-      if (server && server.isRunning()) {
-        vscode.window.showErrorMessage("Server is already running!");
-        return;
+    vscode.commands.registerCommand(
+      "extension.phpServer.serveProject",
+      function() {
+        if (server && server.isRunning()) {
+          vscode.window.showErrorMessage("Server is already running!");
+          return;
+        }
+        createServer(context.extensionPath);
       }
-      createServer(context.extensionPath);
-    })
+    )
   );
   subscriptions.push(
-    vscode.commands.registerCommand("extension.reloadServer", function () {
-      const reloading = server && server.isRunning();
-      if (server) {
-        server.shutDown();
+    vscode.commands.registerCommand(
+      "extension.phpServer.reloadServer",
+      function() {
+        const reloading = server && server.isRunning();
+        if (server) {
+          server.shutDown();
+        }
+        createServer(context.extensionPath, reloading);
       }
-      createServer(context.extensionPath, reloading);
-    })
+    )
   );
   subscriptions.push(
-    vscode.commands.registerCommand("extension.openFileInBrowser", function () {
-      if (!server || !server.isRunning()) {
-        vscode.window.showErrorMessage("Server is not running!");
-        return;
+    vscode.commands.registerCommand(
+      "extension.phpServer.openFileInBrowser",
+      function() {
+        if (!server || !server.isRunning()) {
+          vscode.window.showErrorMessage("Server is not running!");
+          return;
+        }
+        const config = vscode.workspace.getConfiguration("phpserver");
+        server.execBrowser(
+          config.get<string>("browser"),
+          vscode.window.activeTextEditor
+            ? vscode.window.activeTextEditor.document.fileName
+            : undefined
+        );
       }
-      const config = vscode.workspace.getConfiguration("phpserver");
-      server.execBrowser(config.get<string>('browser'),
-        vscode.window.activeTextEditor ?
-          vscode.window.activeTextEditor.document.fileName : undefined);
-    })
+    )
   );
   subscriptions.push(
-    vscode.commands.registerCommand("extension.stopServer", deactivate)
+    vscode.commands.registerCommand(
+      "extension.phpServer.stopServer",
+      deactivate
+    )
   );
 }
 
@@ -62,8 +77,11 @@ function createServer(extensionPath: string, reloading?: boolean) {
       return;
     }
 
-    server.execBrowser(config.get<string>('browser'),
-      vscode.window.activeTextEditor ?
-        vscode.window.activeTextEditor.document.fileName : undefined);
+    server.execBrowser(
+      config.get<string>("browser"),
+      vscode.window.activeTextEditor
+        ? vscode.window.activeTextEditor.document.fileName
+        : undefined
+    );
   });
 }
