@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.4.5
+* Fix #35 (Thanks to @iemadk)
+
 ### 2.4.4
 * Fix #30 and #31
 

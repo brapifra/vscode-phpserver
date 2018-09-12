@@ -6,7 +6,7 @@ export function activate(context: vscode.ExtensionContext) {
   const subscriptions = context.subscriptions as any;
 
   subscriptions.push(
-    vscode.commands.registerCommand("extension.serveProject", function () {
+    vscode.commands.registerCommand("extension.phpServer.serveProject", function () {
       if (server && server.isRunning()) {
         vscode.window.showErrorMessage("Server is already running!");
         return;
@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
     })
   );
   subscriptions.push(
-    vscode.commands.registerCommand("extension.reloadServer", function () {
+    vscode.commands.registerCommand("extension.phpServer.reloadServer", function () {
       const reloading = server && server.isRunning();
       if (server) {
         server.shutDown();
@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
     })
   );
   subscriptions.push(
-    vscode.commands.registerCommand("extension.openFileInBrowser", function () {
+    vscode.commands.registerCommand("extension.phpServer.openFileInBrowser", function () {
       if (!server || !server.isRunning()) {
         vscode.window.showErrorMessage("Server is not running!");
         return;
@@ -36,7 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
     })
   );
   subscriptions.push(
-    vscode.commands.registerCommand("extension.stopServer", deactivate)
+    vscode.commands.registerCommand("extension.phpServer.stopServer", deactivate)
   );
 }
 

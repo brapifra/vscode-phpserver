@@ -2,7 +2,7 @@
   "name": "phpserver",
   "displayName": "PHP Server",
   "description": "Serve your Project with PHP",
-  "version": "2.4.4",
+  "version": "2.4.5",
   "publisher": "brapifra",
   "engines": {
     "vscode": "^1.5.0"
@@ -11,9 +11,9 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.serveProject",
-    "onCommand:extension.openFileInBrowser",
-    "onCommand:extension.reloadServer"
+    "onCommand:extension.phpServer.serveProject",
+    "onCommand:extension.phpServer.openFileInBrowser",
+    "onCommand:extension.phpServer.reloadServer"
   ],
   "main": "./out/extension",
   "repository": {
@@ -23,7 +23,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.serveProject",
+        "command": "extension.phpServer.serveProject",
         "title": "PHP Server: Serve Project",
         "icon": {
           "light": "./src/server.svg",
@@ -31,15 +31,15 @@
         }
       },
       {
-        "command": "extension.reloadServer",
+        "command": "extension.phpServer.reloadServer",
         "title": "PHP Server: Reload Server"
       },
       {
-        "command": "extension.openFileInBrowser",
+        "command": "extension.phpServer.openFileInBrowser",
         "title": "PHP Server: Open file in Browser"
       },
       {
-        "command": "extension.stopServer",
+        "command": "extension.phpServer.stopServer",
         "title": "PHP Server: Stop"
       }
     ],
@@ -87,25 +87,25 @@
     "menus": {
       "editor/title": [
         {
-          "command": "extension.serveProject",
+          "command": "extension.phpServer.serveProject",
           "group": "navigation"
         }
       ],
       "editor/context": [
         {
-          "command": "extension.serveProject",
+          "command": "extension.phpServer.serveProject",
           "group": "navigation@1"
         },
         {
-          "command": "extension.reloadServer",
+          "command": "extension.phpServer.reloadServer",
           "group": "navigation@1.01"
         },
         {
-          "command": "extension.openFileInBrowser",
+          "command": "extension.phpServer.openFileInBrowser",
           "group": "navigation@1.02"
         },
         {
-          "command": "extension.stopServer",
+          "command": "extension.phpServer.stopServer",
           "group": "navigation@1.03"
         }
       ]

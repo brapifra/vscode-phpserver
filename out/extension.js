@@ -5,21 +5,21 @@ const Server_1 = require("./Server");
 let server;
 function activate(context) {
     const subscriptions = context.subscriptions;
-    subscriptions.push(vscode.commands.registerCommand("extension.serveProject", function () {
+    subscriptions.push(vscode.commands.registerCommand("extension.phpServer.serveProject", function () {
         if (server && server.isRunning()) {
             vscode.window.showErrorMessage("Server is already running!");
             return;
         }
         createServer(context.extensionPath);
     }));
-    subscriptions.push(vscode.commands.registerCommand("extension.reloadServer", function () {
+    subscriptions.push(vscode.commands.registerCommand("extension.phpServer.reloadServer", function () {
         const reloading = server && server.isRunning();
         if (server) {
             server.shutDown();
         }
         createServer(context.extensionPath, reloading);
     }));
-    subscriptions.push(vscode.commands.registerCommand("extension.openFileInBrowser", function () {
+    subscriptions.push(vscode.commands.registerCommand("extension.phpServer.openFileInBrowser", function () {
         if (!server || !server.isRunning()) {
             vscode.window.showErrorMessage("Server is not running!");
             return;
@@ -28,7 +28,7 @@ function activate(context) {
         server.execBrowser(config.get('browser'), vscode.window.activeTextEditor ?
             vscode.window.activeTextEditor.document.fileName : undefined);
     }));
-    subscriptions.push(vscode.commands.registerCommand("extension.stopServer", deactivate));
+    subscriptions.push(vscode.commands.registerCommand("extension.phpServer.stopServer", deactivate));
 }
 exports.activate = activate;
 function deactivate() {
