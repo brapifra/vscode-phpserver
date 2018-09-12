@@ -1,5 +1,8 @@
 # Changelog
 
+### 2.4.6
+* Demo gif
+
 ### 2.4.5
 * Fix #35 (Thanks to @iemadk)
 
