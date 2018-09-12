@@ -2,6 +2,8 @@
 
 Host/Serve current workspace (or subfolder) with PHP.
 
+![demo](demo.gif)
+
 ## Features
 
 You can execute it with:
