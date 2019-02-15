@@ -77,6 +77,11 @@
           "default": null,
           "description": "Specify the location of your PHP executable. If empty, the extension will use the PHP executable which appears in the $PATH environment variable"
         },
+        "phpserver.phpConfigPath": {
+          "type": "string",
+          "default": null,
+          "description": "Specify the location of your php.ini file. If empty, the extension lets the PHP executable to decides."
+        },
         "phpserver.autoOpenOnReload": {
           "type": "boolean",
           "default": true,

@@ -51,12 +51,14 @@ function createServer(extensionPath: string, reloading?: boolean) {
   const relativePath = config.get<string>("relativePath");
   const router = config.get<string>("router");
   const phpPath = config.get<string>("phpPath");
+  const phpConfigPath = config.get<string>("phpConfigPath");
   const port = config.get<number>("port");
   const ip = config.get<string>("ip");
 
   server = new Server(ip, port, relativePath, extensionPath);
   server.setRouter(router);
   server.setPhpPath(phpPath);
+  server.setPhpConfigPath(phpConfigPath);
   server.run(() => {
     if (reloading && !config.get<boolean>("autoOpenOnReload")) {
       return;

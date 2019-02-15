@@ -6,6 +6,7 @@ export default class Server {
   private relativePath: string;
   private router?: string;
   private phpPath?: string;
+  private phpConfigPath?: string;
   private extensionPath: string;
   private port: number;
   private ip: string;
@@ -34,6 +35,10 @@ export default class Server {
 
   public setPhpPath(phpPath: string) {
     this.phpPath = phpPath;
+  }
+
+  public setPhpConfigPath(phpConfigPath: string) {
+    this.phpConfigPath = phpConfigPath;
   }
 
   public setRouter(router: string) {
@@ -77,6 +82,11 @@ export default class Server {
     const args: string[] = ["-S", `${this.ip}:${this.port}`];
     args.push("-t");
     args.push(this.relativePath);
+
+    if (this.phpConfigPath) {      
+      args.push("-c");
+      args.push(this.phpConfigPath);
+    }
 
     if (this.router) {
       args.push(this.router);
