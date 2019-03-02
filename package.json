@@ -80,7 +80,7 @@
         "phpserver.phpConfigPath": {
           "type": "string",
           "default": null,
-          "description": "Specify the location of your php.ini file. If empty, the extension lets the PHP executable to decides."
+          "description": "Specify the location of your php.ini file. If empty, the extension uses the default path."
         },
         "phpserver.autoOpenOnReload": {
           "type": "boolean",
