@@ -89,29 +89,29 @@
         {
           "command": "extension.phpServer.serveProject",
           "group": "navigation",
-          "when": "resourceLangId == php"
+          "when": "resourceLangId == php || resourceLangId == html"
         }
       ],
       "editor/context": [
         {
           "command": "extension.phpServer.serveProject",
           "group": "2_phpserver@1",
-          "when": "resourceLangId == php"
+          "when": "resourceLangId == php || resourceLangId == html"
         },
         {
           "command": "extension.phpServer.reloadServer",
           "group": "2_phpserver@2",
-          "when": "resourceLangId == php"
+          "when": "resourceLangId == php || resourceLangId == html"
         },
         {
           "command": "extension.phpServer.openFileInBrowser",
           "group": "2_phpserver@3",
-          "when": "resourceLangId == php"
+          "when": "resourceLangId == php || resourceLangId == html"
         },
         {
           "command": "extension.phpServer.stopServer",
           "group": "2_phpserver@4",
-          "when": "resourceLangId == php"
+          "when": "resourceLangId == php || resourceLangId == html"
         }
       ]
     }
