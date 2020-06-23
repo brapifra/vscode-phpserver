@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
       const config = vscode.workspace.getConfiguration("phpserver");
-      server.execBrowser(config.get<string>('browser'),
+      server.execBrowser(config.get<string>('browser')!,
         vscode.window.activeTextEditor ?
           vscode.window.activeTextEditor.document.fileName : undefined);
     })
@@ -48,11 +48,11 @@ export function deactivate() {
 
 function createServer(extensionPath: string, reloading?: boolean) {
   const config = vscode.workspace.getConfiguration("phpserver");
-  const relativePath = config.get<string>("relativePath");
-  const router = config.get<string>("router");
-  const phpPath = config.get<string>("phpPath");
-  const port = config.get<number>("port");
-  const ip = config.get<string>("ip");
+  const relativePath = config.get<string>("relativePath")!;
+  const router = config.get<string>("router")!;
+  const phpPath = config.get<string>("phpPath")!;
+  const port = config.get<number>("port")!;
+  const ip = config.get<string>("ip")!;
 
   server = new Server(ip, port, relativePath, extensionPath);
   server.setRouter(router);
@@ -62,7 +62,7 @@ function createServer(extensionPath: string, reloading?: boolean) {
       return;
     }
 
-    server.execBrowser(config.get<string>('browser'),
+    server.execBrowser(config.get<string>('browser')!,
       vscode.window.activeTextEditor ?
         vscode.window.activeTextEditor.document.fileName : undefined);
   });
