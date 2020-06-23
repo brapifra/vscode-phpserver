@@ -36,11 +36,6 @@ This extension contributes the following settings:
 
 ## [Changelog](CHANGELOG.md)
 
-## Known bugs
-
-#### ~~No console output in Windows~~
------------------------------------------------------------------------------------------------------------
-
 ## For more information
 
 * [GitHub](http://github.com/brapifra)
