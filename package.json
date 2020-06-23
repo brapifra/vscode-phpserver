@@ -88,25 +88,30 @@
       "editor/title": [
         {
           "command": "extension.phpServer.serveProject",
-          "group": "navigation"
+          "group": "navigation",
+          "when": "resourceLangId == php || resourceLangId == html"
         }
       ],
       "editor/context": [
         {
           "command": "extension.phpServer.serveProject",
-          "group": "navigation@1"
+          "group": "2_phpserver@1",
+          "when": "resourceLangId == php || resourceLangId == html"
         },
         {
           "command": "extension.phpServer.reloadServer",
-          "group": "navigation@1.01"
+          "group": "2_phpserver@2",
+          "when": "resourceLangId == php || resourceLangId == html"
         },
         {
           "command": "extension.phpServer.openFileInBrowser",
-          "group": "navigation@1.02"
+          "group": "2_phpserver@3",
+          "when": "resourceLangId == php || resourceLangId == html"
         },
         {
           "command": "extension.phpServer.stopServer",
-          "group": "navigation@1.03"
+          "group": "2_phpserver@4",
+          "when": "resourceLangId == php || resourceLangId == html"
         }
       ]
     }
