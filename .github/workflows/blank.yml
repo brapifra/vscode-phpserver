@@ -25,9 +25,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
-    - run: npm install
+    - run: yarn install
+    - run: yarn compile
     - name: Run tests
       uses: GabrielBB/xvfb-action@v1.2
       with:
-        run: npm compile && npm test
+        run: yarn test
 
