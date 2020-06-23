@@ -1,4 +1,4 @@
-# PHP Server
+# PHP Server ![CI](https://github.com/brapifra/vscode-phpserver/workflows/CI/badge.svg)
 
 Host/Serve current workspace (or subfolder) with PHP.
 
