@@ -58,10 +58,10 @@ export default class Server {
       cwd: vscode.workspace.rootPath
     });
 
-    this.terminal.stdout.on("data", (data: Buffer) => {
+    this.terminal.stdout?.on("data", (data: Buffer) => {
       this.outputChanneL.appendLine(data.toString());
     });
-    this.terminal.stderr.on("data", (data: Buffer) => {
+    this.terminal.stderr?.on("data", (data: Buffer) => {
       this.outputChanneL.appendLine(data.toString());
     });
     this.terminal.on("error", (err: Error) => {
@@ -164,7 +164,7 @@ export default class Server {
         i++;
       }
     } else {
-      i = fullFileName.indexOf(vscode.workspace.rootPath) + vscode.workspace.rootPath.length + 1;
+      i = fullFileName.indexOf(vscode.workspace.rootPath!) + vscode.workspace.rootPath!.length + 1;
     }
     const ret = fullFileName.substring(i);
     return ret.replace(new RegExp(/\s/g),"%20");
