@@ -2734,6 +2734,17 @@ jest-resolve@^26.1.0:
     resolve "^1.17.0"
     slash "^3.0.0"
 
+jest-runner-vscode@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jest-runner-vscode/-/jest-runner-vscode-1.2.0.tgz#5f86edbc6e61a596606da51b594aefa97540c2fd"
+  integrity sha512-G2X6QJqfGd6/+GTnEKllo7v22XmXen2PBz3LdlrT4XQjUdHPaZJb6KHgMYcFQqW2Mq6XDzsnc3NI19UjxqYydQ==
+  dependencies:
+    "@jest/core" "25.1.0"
+    "@jest/test-result" "25.1.0"
+    jest-environment-vscode "1.0.0"
+    prettier "1.19.1"
+    source-map-support "0.5.16"
+
 jest-runner@^25.1.0, jest-runner@^25.5.4:
   version "25.5.4"
   resolved "https://registry.yarnpkg.com/jest-runner/-/jest-runner-25.5.4.tgz#ffec5df3875da5f5c878ae6d0a17b8e4ecd7c71d"
@@ -4513,17 +4524,6 @@ verror@1.10.0:
     assert-plus "^1.0.0"
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
-
-vscode-jest-test-runner@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/vscode-jest-test-runner/-/vscode-jest-test-runner-1.0.0.tgz#cf5bbb3b2357a66e9d91f453fa8430bca5efd048"
-  integrity sha512-104TfR803jUx/cjILA5tnFY342F/6l9/LSZOc/lTYULckNUr7+RglvEXWYSOju/x4FMNNGOcQHtK/arXxw/wwQ==
-  dependencies:
-    "@jest/core" "25.1.0"
-    "@jest/test-result" "25.1.0"
-    jest-environment-vscode "1.0.0"
-    prettier "1.19.1"
-    source-map-support "0.5.16"
 
 vscode-test@^1.4.0:
   version "1.4.0"

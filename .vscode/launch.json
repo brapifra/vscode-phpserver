@@ -5,18 +5,35 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Launch extension",
       "type": "extensionHost",
       "request": "launch",
-      "name": "Extensión de inicio",
       "runtimeExecutable": "${execPath}",
-      "args": [
-        "--extensionDevelopmentPath=${workspaceRoot}"
-      ],
+      "args": ["--extensionDevelopmentPath=${workspaceRoot}"],
       "sourceMaps": true,
-      "outFiles": [
-        "${workspaceRoot}/out/**/*.js"
-      ],
+      "outFiles": ["${workspaceRoot}/out/**/*.js"],
       "preLaunchTask": "ts-compile"
-    }
+    },
+    {
+      "name": "Integrations tests",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "stopOnEntry": false,
+      "sourceMaps": true,
+      "smartStep": true,
+      "args": [
+        "--disable-extensions",
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "--extensionTestsPath=${workspaceFolder}/node_modules/jest-runner-vscode"
+      ],
+      "skipFiles": ["<node_internals>/**/*.js"],
+      "outFiles": ["${workspaceFolder}/out/**/*.js"],
+      "preLaunchTask": "npm: compile",
+      "internalConsoleOptions": "openOnSessionStart",
+      "env": {
+        "JEST_RUNNER_VSCODE_TEST_REGEX": "integration.test.ts"
+      }
+    },
   ]
 }

@@ -1,0 +1,4 @@
+{
+  "transform": { "^.+\\.tsx?$": "ts-jest" },
+  "testPathIgnorePatterns": ["integration.test.ts", "runTests.ts", "<rootDir>/out/"]
+}

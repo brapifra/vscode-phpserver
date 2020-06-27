@@ -125,17 +125,19 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "test": "node ./out/test/runTests.js"
+    "test": "yarn unit-test && yarn integration-test",
+    "unit-test": "yarn jest --config ./jest_unit_tests.config.json ",
+    "integration-test": "node ./out/__tests__/runTests.js"
   },
   "devDependencies": {
     "@types/jest": "^26.0.0",
     "@types/node": "^14.0.13",
     "@types/vscode": "^1.46.0",
     "jest": "^26.1.0",
+    "jest-runner-vscode": "^1.2.0",
     "ts-jest": "^26.1.1",
     "tslint": "^5.8.0",
     "typescript": "^3.9.5",
-    "vscode-jest-test-runner": "^1.0.0",
     "vscode-test": "^1.4.0"
   },
   "dependencies": {
