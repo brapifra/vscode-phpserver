@@ -126,7 +126,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "test": "yarn unit-test && yarn integration-test",
-    "unit-test": "yarn jest --config ./jest_unit_tests.config.json ",
+    "unit-test": "yarn jest --config ./jest_unit_tests.config.json --coverage",
     "integration-test": "node ./out/__tests__/runTests.js"
   },
   "devDependencies": {

@@ -45,7 +45,7 @@ export default class Server {
     this.router = router;
   }
 
-  public run(cb: Function) {
+  public run() {
     if (this.isRunning()) {
       vscode.window.showErrorMessage("Server is already running!");
       return;
@@ -74,7 +74,7 @@ export default class Server {
     });
 
     this.running = true;
-    cb();
+
     vscode.window.showInformationMessage("Serving Project");
   }
 
