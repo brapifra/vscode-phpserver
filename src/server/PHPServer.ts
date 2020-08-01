@@ -74,7 +74,27 @@ export default class PHPServer {
 
   private setupProcessListeners() {
     this.listeners.forEach(([event, eventHandler]) => {
-      this.process?.on(event, eventHandler);
+      this.setupSingleProcessListener(event, eventHandler);
     });
+  }
+
+  private setupSingleProcessListener(
+    event: ServerEvent,
+    eventHandler: ServerEventHandler
+  ) {
+    if (event === 'data') {
+      this.process?.stdout?.on(event, (data: Buffer): void => {
+        eventHandler(data.toString());
+      });
+      this.process?.stderr?.on(event, (data: Buffer): void => {
+        eventHandler(data.toString());
+      });
+    } else if (event === 'error') {
+      this.process?.on(event, (error: Error) => {
+        eventHandler(error.stack || error.message);
+      });
+    } else {
+      this.process?.on(event, eventHandler);
+    }
   }
 }

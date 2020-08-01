@@ -1,6 +1,9 @@
 import * as vscode from 'vscode';
+import { spawn } from 'child_process';
+import * as open from 'open';
 import CommandController from '../CommandController';
-import { spawn, exec } from 'child_process';
+import { ExtensionConfiguration } from '../../extension';
+import Messages from '../../Messages';
 
 jest.mock('child_process', () => ({
   spawn: jest.fn(() => ({
@@ -12,14 +15,26 @@ jest.mock('child_process', () => ({
   exec: jest.fn(),
 }));
 
+jest.mock('open', () => jest.fn());
+
+const contextMock = {
+  extension: {
+    path: 'fake-path',
+    getConfiguration: jest.fn(() => defaultConfig),
+  },
+  getRootPath: jest.fn(() => 'rootPath'),
+  getAbsolutePathToActiveFile: jest.fn(() => undefined),
+  notify: jest.fn(),
+};
+
 beforeEach(() => {
-  (spawn as any).mockClear();
-  (exec as any).mockClear();
+  (spawn as jest.Mock).mockClear();
+  (open as jest.Mock).mockClear();
 });
 
-const defaultConfig: { [key: string]: any } = {
+const defaultConfig: ExtensionConfiguration = {
   ip: '0.0.0.0',
-  port: '3333',
+  port: 3333,
   browser: 'firefox',
   relativePath: './',
 };
@@ -28,10 +43,15 @@ describe('CommandController', () => {
   let controller: CommandController;
 
   beforeEach(() => {
-    controller = new CommandController({
-      extensionPath: 'fake-path',
-      getActiveFileName: () => undefined,
-    });
+    contextMock.extension.getConfiguration.mockClear();
+    contextMock.extension.getConfiguration.mockImplementation(
+      () => defaultConfig
+    );
+    contextMock.notify.mockClear();
+    contextMock.getRootPath.mockClear();
+    contextMock.getAbsolutePathToActiveFile.mockClear();
+
+    controller = new CommandController(contextMock);
   });
 
   describe('serveProject', () => {
@@ -41,30 +61,25 @@ describe('CommandController', () => {
       controller.serveProject();
 
       expectDefaultServerExecution();
-      expect(vscode.window.showErrorMessage).toBeCalledTimes(0);
-      expect(vscode.window.showInformationMessage).toBeCalledTimes(1);
-      expect(vscode.window.showInformationMessage).toBeCalledWith(
-        'Serving Project'
-      );
+      expect(contextMock.notify).toBeCalledTimes(1);
+      expect(contextMock.notify).toBeCalledWith(Messages.SERVING_PROJECT);
     });
     it('should not create a server if there is already one running', () => {
       controller.serveProject();
       expect(spawn).toBeCalledTimes(1);
-      expect(exec).toBeCalledTimes(1);
-      expect(vscode.window.showErrorMessage).toBeCalledTimes(0);
+      expect(open).toBeCalledTimes(1);
 
-      controller.serveProject();
-      expect(spawn).toBeCalledTimes(1);
-      expect(exec).toBeCalledTimes(1);
-      expect(vscode.window.showErrorMessage).toBeCalledTimes(1);
-      expect(vscode.window.showErrorMessage).toBeCalledWith(
-        'Server is already running!'
+      expect(() => controller.serveProject()).toThrow(
+        Messages.SERVER_IS_ALREADY_RUNNING
       );
     });
   });
   describe('reloadServer', () => {
     it("should stop the server if it's running", () => {
-      mockGetConfigurationOnce(defaultConfig);
+      contextMock.extension.getConfiguration.mockImplementation(() => ({
+        ...defaultConfig,
+        autoOpenOnReload: true,
+      }));
 
       const spawnKillMock = jest.fn();
       (spawn as jest.Mock).mockImplementationOnce(
@@ -80,31 +95,35 @@ describe('CommandController', () => {
 
       expect(spawnKillMock).not.toBeCalled();
       expect(spawn).toBeCalledTimes(1);
-      expect(exec).toBeCalledTimes(1);
+      expect(open).toBeCalledTimes(1);
       expectDefaultServerExecution();
 
       controller.reloadServer();
       expect(spawnKillMock).toBeCalledTimes(1);
       expect(spawn).toBeCalledTimes(2);
-      expect(exec).toBeCalledTimes(2);
+      expect(open).toBeCalledTimes(2);
     });
 
     it('should not re-open file in browser if autoOpenOnReload is not set', () => {
       controller.serveProject();
-      expect(exec).toBeCalledTimes(1);
+      expect(open).toBeCalledTimes(1);
 
       mockGetConfigurationOnce(defaultConfig);
       controller.reloadServer();
-      expect(exec).toBeCalledTimes(1);
+      expect(open).toBeCalledTimes(1);
     });
 
     it('should re-open file in browser if autoOpenOnReload is set to true', () => {
       controller.serveProject();
-      expect(exec).toBeCalledTimes(1);
+      expect(open).toBeCalledTimes(1);
 
-      mockGetConfigurationOnce({ ...defaultConfig, autoOpenOnReload: true });
+      contextMock.extension.getConfiguration.mockImplementation(() => ({
+        ...defaultConfig,
+        autoOpenOnReload: true,
+      }));
+
       controller.reloadServer();
-      expect(exec).toBeCalledTimes(2);
+      expect(open).toBeCalledTimes(2);
     });
   });
 
@@ -117,39 +136,42 @@ describe('CommandController', () => {
 
       expect(spawn).toBeCalledTimes(1);
       expectDefaultServerExecution();
-      expect(exec).toBeCalledTimes(1);
+      expect(open).toBeCalledTimes(1);
 
-      (exec as any).mockClear();
+      (open as jest.Mock).mockClear();
       mockGetConfigurationOnce(defaultConfig);
       controller.openFileInBrowser();
-      expect(exec).toBeCalledTimes(1);
-      expect(exec).toBeCalledWith('firefox http://0.0.0.0:3333/');
+      expectDefaultServerExecution();
     });
     it('should show an error message if the server is not running', () => {
-      controller.openFileInBrowser();
-      expect(vscode.window.showErrorMessage).toBeCalledTimes(1);
-      expect(vscode.window.showErrorMessage).toBeCalledWith(
-        'Server is not running!'
+      expect(() => controller.openFileInBrowser()).toThrow(
+        Messages.SERVER_IS_NOT_RUNNING
       );
       expect(spawn).toBeCalledTimes(0);
     });
     it('should open the browser with the correct path', () => {
-      const getActiveFileName = jest.fn(() => '/rootPath/test/test.php');
+      const getAbsolutePathToActiveFile = jest.fn(
+        () => '/rootPath/test/test.php'
+      );
       const controller = new CommandController({
-        extensionPath: 'fake-path',
-        getActiveFileName,
+        ...contextMock,
+        extension: { path: 'fake-path', getConfiguration: () => ({}) },
+        getAbsolutePathToActiveFile,
+        getRootPath: () => '/rootPath',
       });
 
       mockGetConfigurationOnce(defaultConfig);
       controller.serveProject();
-      expect(getActiveFileName).toBeCalledTimes(1);
-      expect(exec).toBeCalledTimes(1);
+      expect(getAbsolutePathToActiveFile).toBeCalledTimes(1);
+      expect(open).toBeCalledTimes(1);
 
       mockGetConfigurationOnce(defaultConfig);
       controller.openFileInBrowser();
-      expect(exec).toBeCalledTimes(2);
-      expect(getActiveFileName).toBeCalledTimes(2);
-      expect(exec).toBeCalledWith(`firefox http://0.0.0.0:3333/test/test.php`);
+      expect(open).toBeCalledTimes(2);
+      expect(getAbsolutePathToActiveFile).toBeCalledTimes(2);
+      expect(open).toBeCalledWith(`http://localhost:3000/test/test.php`, {
+        url: true,
+      });
     });
   });
 
@@ -174,7 +196,7 @@ describe('CommandController', () => {
 
       expect(spawnKillMock).toBeCalledTimes(1);
       expect(spawn).toBeCalledTimes(1);
-      expect(exec).toBeCalledTimes(1);
+      expect(open).toBeCalledTimes(1);
     });
   });
 });
@@ -183,15 +205,13 @@ function expectDefaultServerExecution() {
   expect(spawn).toBeCalledWith('php', ['-S', '0.0.0.0:3333', '-t', './'], {
     cwd: 'rootPath',
   });
-  expect(exec).toBeCalledWith('firefox http://0.0.0.0:3333/');
+  expect(open).toBeCalledTimes(1);
+  expect(open).toBeCalledWith('http://0.0.0.0:3333/', {
+    url: true,
+    app: defaultConfig.browser,
+  });
 }
 
-function mockGetConfigurationOnce(config: { [key: string]: any }) {
-  const getConfigValue = jest.fn((key: string) => config[key]);
-  (vscode.workspace.getConfiguration as jest.Mock).mockImplementationOnce(
-    () => ({
-      get: getConfigValue,
-    })
-  );
-  return getConfigValue;
+function mockGetConfigurationOnce(config: ExtensionConfiguration) {
+  contextMock.extension.getConfiguration.mockImplementationOnce(() => config);
 }
