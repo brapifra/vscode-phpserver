@@ -1,10 +1,21 @@
 import * as vscode from 'vscode';
 import CommandController from './controllers/CommandController';
+import BreakingChangesNotifier from './BreakingChangesNotifier';
 
-export function activate(context: vscode.ExtensionContext) {
-  const subscriptions = context.subscriptions as any;
+type ExtensionContext = Pick<
+  vscode.ExtensionContext,
+  'subscriptions' | 'extensionPath' | 'globalState'
+>;
+
+export async function activate({
+  subscriptions,
+  extensionPath,
+  globalState,
+}: ExtensionContext) {
+  new BreakingChangesNotifier(globalState).notifyIfRequired();
+
   const controller = new CommandController({
-    extensionPath: context.extensionPath,
+    extensionPath,
     getActiveFileName: () => vscode.window.activeTextEditor?.document.fileName,
   });
 
