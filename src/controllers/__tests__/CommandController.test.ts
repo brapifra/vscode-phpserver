@@ -4,6 +4,7 @@ import * as open from 'open';
 import CommandController from '../CommandController';
 import { ExtensionConfiguration } from '../../extension';
 import Messages from '../../Messages';
+import VSCodeOutputChannelMock from '../../__mocks__/VSCodeOutputChannelMock';
 
 jest.mock('child_process', () => ({
   spawn: jest.fn(() => ({
@@ -58,9 +59,15 @@ describe('CommandController', () => {
     it('should create a server with the correct configuration', () => {
       mockGetConfigurationOnce(defaultConfig);
 
+      expect(VSCodeOutputChannelMock.clear).toBeCalledTimes(0);
+      expect(VSCodeOutputChannelMock.show).toBeCalledTimes(0);
+      expect(contextMock.notify).toBeCalledTimes(0);
+
       controller.serveProject();
 
       expectDefaultServerExecution();
+      expect(VSCodeOutputChannelMock.clear).toBeCalledTimes(1);
+      expect(VSCodeOutputChannelMock.show).toBeCalledTimes(1);
       expect(contextMock.notify).toBeCalledTimes(1);
       expect(contextMock.notify).toBeCalledWith(Messages.SERVING_PROJECT);
     });

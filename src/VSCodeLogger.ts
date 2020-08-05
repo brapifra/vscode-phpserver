@@ -13,15 +13,15 @@ export default class VSCodeLogger implements Logger {
 
   constructor(private name: string) {}
 
-  clear() {
+  clear = () => {
     this.outputChannel.clear();
-  }
+  };
 
-  show() {
+  show = () => {
     this.outputChannel.show();
-  }
+  };
 
-  appendLine(message: string) {
+  appendLine = (message: string) => {
     this.outputChannel.appendLine(message);
-  }
+  };
 }

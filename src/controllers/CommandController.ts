@@ -4,7 +4,7 @@ import { platform } from 'os';
 import { relative } from 'path';
 import { AnyBrowser } from '../browser/Browser';
 import Messages from '../Messages';
-import VSCodeLogger, { Logger} from '../VSCodeLogger';
+import VSCodeLogger, { Logger } from '../VSCodeLogger';
 
 interface CommandControllerContext {
   extension: {
@@ -22,17 +22,17 @@ export default class CommandController {
 
   constructor(private context: CommandControllerContext) {
     this.server = new PHPServer();
-    
+
     this.server.on('data', this.logger.appendLine);
 
     this.server.on('close', () => {
       this.server.stop();
-      this.context.notify(Messages.SERVER_STOPPED)
+      this.context.notify(Messages.SERVER_STOPPED);
     });
 
-    this.server.on('error', errorMessage => {
+    this.server.on('error', (errorMessage) => {
       this.server.stop();
-      this.context.notify(`Server error: ${errorMessage}`)
+      this.context.notify(`Server error: ${errorMessage}`);
     });
   }
 
@@ -40,6 +40,9 @@ export default class CommandController {
     if (this.server.isRunning()) {
       throw Error(Messages.SERVER_IS_ALREADY_RUNNING);
     }
+
+    this.logger.clear();
+    this.logger.show();
 
     this.startServer();
     this.openBrowserIfPossible();

@@ -1,10 +1,9 @@
+import VSCodeOutputChannelMock from '../src/__mocks__/VSCodeOutputChannelMock';
+
 export const window = {
   showErrorMessage: jest.fn(),
   showInformationMessage: jest.fn((_, opt) => Promise.resolve(opt)),
-  createOutputChannel: jest.fn(() => ({
-    clear: jest.fn(),
-    show: jest.fn(),
-  })),
+  createOutputChannel: jest.fn(() => VSCodeOutputChannelMock),
 };
 
 export const workspace = {
@@ -32,4 +31,7 @@ beforeEach(() => {
   window.createOutputChannel.mockClear();
   workspace.getConfiguration.mockClear();
   commands.registerCommand.mockClear();
+  VSCodeOutputChannelMock.appendLine.mockClear();
+  VSCodeOutputChannelMock.clear.mockClear();
+  VSCodeOutputChannelMock.show.mockClear();
 });
