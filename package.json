@@ -130,6 +130,7 @@
     "integration-test": "node ./out/__tests__/runTests.js"
   },
   "devDependencies": {
+    "@types/commondir": "^1.0.0",
     "@types/jest": "^26.0.0",
     "@types/node": "^14.0.13",
     "@types/open": "^6.2.1",
@@ -142,6 +143,7 @@
     "vscode-test": "^1.4.0"
   },
   "dependencies": {
+    "commondir": "^1.0.1",
     "open": "^7.0.4",
     "os": "^0.1.1"
   },

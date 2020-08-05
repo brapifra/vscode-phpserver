@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import CommandController from './controllers/CommandController';
 import BreakingChangesNotifier from './BreakingChangesNotifier';
+import { getRootPath } from './utils';
 
 const EXTENSION_NAME = 'phpserver';
 
@@ -16,16 +17,9 @@ export async function activate({
 }: ExtensionContext) {
   new BreakingChangesNotifier(globalState).notifyIfRequired();
 
-  const controller = new CommandController({
-    extension: {
-      path: extensionPath,
-      getConfiguration: getExtensionConfiguration,
-    },
-    notify: vscode.window.showInformationMessage,
-    getRootPath: () => vscode.workspace.rootPath, // Deprecated
-    getAbsolutePathToActiveFile: () =>
-      vscode.window.activeTextEditor?.document.fileName,
-  });
+  const controller = new CommandController(
+    getCommandControllerContext(extensionPath)
+  );
 
   subscriptions.push(
     vscode.commands.registerCommand(
@@ -51,6 +45,19 @@ export async function activate({
       controller.stopServer
     )
   );
+}
+
+function getCommandControllerContext(extensionPath: string) {
+  return {
+    extension: {
+      path: extensionPath,
+      getConfiguration: getExtensionConfiguration,
+    },
+    notify: vscode.window.showInformationMessage,
+    getRootPath,
+    getAbsolutePathToActiveFile: () =>
+      vscode.window.activeTextEditor?.document.fileName,
+  };
 }
 
 export interface ExtensionConfiguration {
