@@ -124,7 +124,7 @@ export default class CommandController {
     const relativePathToActiveFile = relative(
       rootPath,
       absolutePathToActiveFile || rootPath
-    );
+    ).replace(/\\/g, '/');
 
     const url = `http://${host}:${port}/${relativePathToActiveFile}`;
 

@@ -14,25 +14,31 @@ describe('Extension utils', () => {
       expect(getRootPath()).toBeUndefined();
     });
     it('should return the path of the first folder if there is only one folder in the workspace', () => {
-      const path = '/root/path';
-      mockVscodeWorkspaceFolders([path]);
-      expect(getRootPath()).toEqual(path);
+      const basePath = path.normalize('/root/path');
+      mockVscodeWorkspaceFolders([basePath]);
+      expect(getRootPath()).toEqual(basePath);
     });
     it('should return the shortest common path amongst all the workspace folders', () => {
-      const basePath = '/root/path';
+      const basePath = path.normalize('/root/path');
 
       mockVscodeWorkspaceFolders([
-        `${basePath}/1`,
-        `${basePath}/2`,
-        `${basePath}/1/2`,
-        `${basePath}/2/2`,
+        path.normalize(`${basePath}/1`),
+        path.normalize(`${basePath}/2`),
+        path.normalize(`${basePath}/1/2`),
+        path.normalize(`${basePath}/2/2`),
       ]);
       expect(getRootPath()).toEqual(basePath);
 
-      mockVscodeWorkspaceFolders([`${basePath}/1/3/2`, `${basePath}/1/3/1`]);
-      expect(getRootPath()).toEqual(`${basePath}/1/3`);
+      mockVscodeWorkspaceFolders([
+        path.normalize(`${basePath}/1/3/2`),
+        path.normalize(`${basePath}/1/3/1`),
+      ]);
+      expect(getRootPath()).toEqual(path.normalize(`${basePath}/1/3`));
 
-      mockVscodeWorkspaceFolders([`${basePath}/1`, `${basePath}/11`]);
+      mockVscodeWorkspaceFolders([
+        path.normalize(`${basePath}/1`),
+        path.normalize(`${basePath}/11`),
+      ]);
       expect(getRootPath()).toEqual(basePath);
 
       const windowsBasePath = 'C:\\root\\path';

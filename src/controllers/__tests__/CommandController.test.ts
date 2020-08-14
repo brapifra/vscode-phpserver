@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
 import { spawn } from 'child_process';
+import { platform } from 'os';
 import * as open from 'open';
+import * as path from 'path';
 import CommandController from '../CommandController';
 import { ExtensionConfiguration } from '../../extension';
 import Messages from '../../Messages';
@@ -157,14 +159,14 @@ describe('CommandController', () => {
       expect(spawn).toBeCalledTimes(0);
     });
     it('should open the browser with the correct path', () => {
-      const getAbsolutePathToActiveFile = jest.fn(
-        () => '/rootPath/test/test.php'
+      const getAbsolutePathToActiveFile = jest.fn(() =>
+        path.normalize('/rootPath/test/test.php')
       );
       const controller = new CommandController({
         ...contextMock,
         extension: { path: 'fake-path', getConfiguration: () => ({}) },
         getAbsolutePathToActiveFile,
-        getRootPath: () => '/rootPath',
+        getRootPath: () => path.normalize('/rootPath'),
       });
 
       mockGetConfigurationOnce(defaultConfig);
@@ -208,8 +210,13 @@ describe('CommandController', () => {
   });
 });
 
+const expectedDefaultArgs =
+  platform() === 'win32'
+    ? ['-S', '0.0.0.0:3333', '-t', './', 'fake-path\\src\\server\\logger.php']
+    : ['-S', '0.0.0.0:3333', '-t', './'];
+
 function expectDefaultServerExecution() {
-  expect(spawn).toBeCalledWith('php', ['-S', '0.0.0.0:3333', '-t', './'], {
+  expect(spawn).toBeCalledWith('php', expectedDefaultArgs, {
     cwd: 'rootPath',
   });
   expect(open).toBeCalledTimes(1);
