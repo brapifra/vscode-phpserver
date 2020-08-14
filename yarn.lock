@@ -757,10 +757,10 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
 
-"@types/vscode@^1.46.0":
-  version "1.46.0"
-  resolved "https://registry.yarnpkg.com/@types/vscode/-/vscode-1.46.0.tgz#53f2075986e901ed25cd1ec5f3ffa5db84a111b3"
-  integrity sha512-8m9wPEB2mcRqTWNKs9A9Eqs8DrQZt0qNFO8GkxBOnyW6xR//3s77SoMgb/nY1ctzACsZXwZj3YRTDsn4bAoaUw==
+"@types/vscode@1.32.0":
+  version "1.32.0"
+  resolved "https://registry.yarnpkg.com/@types/vscode/-/vscode-1.32.0.tgz#e0a57de5fc8690a8a3a473996a6b6dfbccc28fbd"
+  integrity sha512-fpHR6iE38V3+2ezMwopt726uRYKK9c89OQDO+t8VEUXNJCaYvnMFbHYgxXvQ/jOvP2ZanlL6r6joRZlsUowzoA==
 
 "@types/yargs-parser@*":
   version "15.0.0"
@@ -3533,10 +3533,6 @@ optionator@^0.8.1:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
     word-wrap "~1.2.3"
-
-os@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/os/-/os-0.1.1.tgz#208845e89e193ad4d971474b93947736a56d13f3"
 
 p-each-series@^2.1.0:
   version "2.1.0"
