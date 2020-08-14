@@ -17,3 +17,13 @@ export function getRootPath() {
     ? normalize(commondir(absolutePathsOfWorkspaceFolders))
     : undefined;
 }
+
+export function withErrorHandler(errorHandler: (error: Error) => void) {
+  return (fn: Function) => (...args: any[]) => {
+    try {
+      return fn(...args);
+    } catch (error) {
+      errorHandler(error);
+    }
+  };
+}

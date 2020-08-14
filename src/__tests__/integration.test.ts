@@ -1,7 +1,10 @@
 import * as vscode from 'vscode';
+import Messages from '../Messages';
 
 describe('vscode-phpserver', () => {
   it('should register all the necessary commands on activation', async () => {
+    const showErrorMessageSpy = jest.spyOn(vscode.window, 'showErrorMessage');
+
     const expectedCommands = [
       'extension.phpServer.serveProject',
       'extension.phpServer.reloadServer',
@@ -15,10 +18,13 @@ describe('vscode-phpserver', () => {
       expect.arrayContaining(expectedCommands)
     );
 
+    expect(showErrorMessageSpy).not.toBeCalled();
     // When I execute an activation event
     await vscode.commands.executeCommand(
       'extension.phpServer.openFileInBrowser'
     );
+    expect(showErrorMessageSpy).toBeCalledTimes(1);
+    expect(showErrorMessageSpy).toBeCalledWith(Messages.SERVER_IS_NOT_RUNNING);
 
     // Then it should register all the necessary commands
     const commands = await vscode.commands.getCommands();

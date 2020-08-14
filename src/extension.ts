@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import CommandController from './controllers/CommandController';
 import BreakingChangesNotifier from './BreakingChangesNotifier';
-import { getRootPath } from './utils';
+import { getRootPath, withErrorHandler } from './utils';
 
 const EXTENSION_NAME = 'phpserver';
 
@@ -9,6 +9,10 @@ type ExtensionContext = Pick<
   vscode.ExtensionContext,
   'subscriptions' | 'extensionPath' | 'globalState'
 >;
+
+const ErrorHandler = withErrorHandler((error) => {
+  vscode.window.showErrorMessage(error.message);
+});
 
 export async function activate({
   subscriptions,
@@ -24,25 +28,25 @@ export async function activate({
   subscriptions.push(
     vscode.commands.registerCommand(
       'extension.phpServer.serveProject',
-      controller.serveProject
+      ErrorHandler(controller.serveProject)
     )
   );
   subscriptions.push(
     vscode.commands.registerCommand(
       'extension.phpServer.reloadServer',
-      controller.reloadServer
+      ErrorHandler(controller.reloadServer)
     )
   );
   subscriptions.push(
     vscode.commands.registerCommand(
       'extension.phpServer.openFileInBrowser',
-      controller.openFileInBrowser
+      ErrorHandler(controller.openFileInBrowser)
     )
   );
   subscriptions.push(
     vscode.commands.registerCommand(
       'extension.phpServer.stopServer',
-      controller.stopServer
+      ErrorHandler(controller.stopServer)
     )
   );
 }
