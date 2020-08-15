@@ -1,4 +1,5 @@
-import { spawn, ChildProcess } from 'child_process';
+import { spawn, ChildProcess, spawnSync } from 'child_process';
+import Messages from '../Messages';
 
 type ServerEvent = 'data' | 'error' | 'close';
 
@@ -26,6 +27,8 @@ export default class PHPServer {
   }
 
   start(config: PHPServerConfig): void {
+    this.throwIfPHPIsNotAvailable(config.phpExecutablePath, config.rootPath);
+
     this.config = config;
 
     this.process = spawn(
@@ -50,6 +53,19 @@ export default class PHPServer {
 
   getCurrentConfig(): PHPServerConfig | undefined {
     return this.config;
+  }
+
+  private throwIfPHPIsNotAvailable(
+    phpExecutablePath: string,
+    rootPath: string
+  ): void {
+    const { status } = spawnSync(phpExecutablePath, ['--version'], {
+      cwd: rootPath,
+    });
+
+    if (status !== 0) {
+      throw new Error(Messages.PHP_NOT_FOUND);
+    }
   }
 
   private getProcessArgs(config: PHPServerConfig): string[] {

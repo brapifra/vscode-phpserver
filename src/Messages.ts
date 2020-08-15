@@ -6,4 +6,5 @@ export default {
   SERVER_IS_ALREADY_RUNNING: 'Server is already running',
   SERVER_IS_NOT_RUNNING: 'Server is not running',
   SERVER_STOPPED: 'Server stopped',
+  PHP_NOT_FOUND: 'PHP not found',
 };

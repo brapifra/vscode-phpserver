@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { spawn } from 'child_process';
+import { spawn, spawnSync } from 'child_process';
 import { platform } from 'os';
 import * as open from 'open';
 import * as path from 'path';
@@ -33,6 +33,7 @@ const contextMock = {
 
 beforeEach(() => {
   (spawn as jest.Mock).mockClear();
+  (spawnSync as jest.Mock).mockClear();
   (open as jest.Mock).mockClear();
 });
 
@@ -81,7 +82,9 @@ describe('CommandController', () => {
 
     expect(VSCodeOutputChannelMock.show).toBeCalledTimes(2);
     expect(VSCodeOutputChannelMock.appendLine).toBeCalledTimes(1);
-    expect(VSCodeOutputChannelMock.appendLine).toBeCalledWith(expectedError.stack);
+    expect(VSCodeOutputChannelMock.appendLine).toBeCalledWith(
+      expectedError.stack
+    );
   });
 
   describe('serveProject', () => {
@@ -108,6 +111,21 @@ describe('CommandController', () => {
       expect(() => controller.serveProject()).toThrow(
         Messages.SERVER_IS_ALREADY_RUNNING
       );
+    });
+
+    it('should throw an error if php was not found', () => {
+      (spawnSync as jest.Mock).mockImplementationOnce(() => ({ status: 1 }));
+
+      expect(spawnSync).toBeCalledTimes(0);
+
+      expect(() => controller.serveProject()).toThrow(Messages.PHP_NOT_FOUND);
+
+      expect(spawnSync).toBeCalledTimes(1);
+      expect(spawnSync).toBeCalledWith('php', ['--version'], {
+        cwd: 'rootPath',
+      });
+      expect(spawn).toBeCalledTimes(0);
+      expect(open).toBeCalledTimes(0);
     });
   });
   describe('reloadServer', () => {
