@@ -26,7 +26,6 @@ export default class CommandController {
     this.server.on('data', this.logger.appendLine);
 
     this.server.on('close', () => {
-      this.server.stop();
       this.context.notify(Messages.SERVER_STOPPED);
     });
 
