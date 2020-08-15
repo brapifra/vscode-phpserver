@@ -59,7 +59,7 @@
         },
         "phpserver.browser": {
           "type": "string",
-          "default": "chrome",
+          "default": null,
           "description": "Select the browser that will open localhost (Options: firefox, chrome or edge. If empty, no browser will be opened)"
         },
         "phpserver.ip": {
