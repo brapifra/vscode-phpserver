@@ -15,6 +15,7 @@ jest.mock('child_process', () => ({
     on: jest.fn(),
     kill: jest.fn(),
   })),
+  spawnSync: jest.fn(() => ({ status: 0 })),
   exec: jest.fn(),
 }));
 
@@ -55,6 +56,32 @@ describe('CommandController', () => {
     contextMock.getAbsolutePathToActiveFile.mockClear();
 
     controller = new CommandController(contextMock);
+  });
+
+  it('should log any error from the running server', () => {
+    const expectedError = new Error('Error');
+
+    const onEventMock = (eventType: string, callback: any) => {
+      if (eventType === 'error') {
+        callback(expectedError);
+      }
+    };
+
+    (spawn as jest.Mock).mockImplementationOnce(() => ({
+      stdout: undefined,
+      stderr: undefined,
+      on: onEventMock,
+      kill: jest.fn(),
+    }));
+
+    expect(VSCodeOutputChannelMock.show).toBeCalledTimes(0);
+    expect(VSCodeOutputChannelMock.appendLine).toBeCalledTimes(0);
+
+    controller.serveProject();
+
+    expect(VSCodeOutputChannelMock.show).toBeCalledTimes(2);
+    expect(VSCodeOutputChannelMock.appendLine).toBeCalledTimes(1);
+    expect(VSCodeOutputChannelMock.appendLine).toBeCalledWith(expectedError.stack);
   });
 
   describe('serveProject', () => {

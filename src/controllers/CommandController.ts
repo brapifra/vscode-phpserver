@@ -31,8 +31,9 @@ export default class CommandController {
     });
 
     this.server.on('error', (errorMessage) => {
+      this.logger.show();
+      this.logger.appendLine(errorMessage);
       this.server.stop();
-      this.context.notify(`Server error: ${errorMessage}`);
     });
   }
 
