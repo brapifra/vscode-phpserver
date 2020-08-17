@@ -24,7 +24,7 @@
     "commands": [
       {
         "command": "extension.phpServer.serveProject",
-        "title": "PHP Server: Serve Project",
+        "title": "PHP Server: Serve project",
         "icon": {
           "light": "./assets/server.svg",
           "dark": "./assets/server.svg"
@@ -32,60 +32,60 @@
       },
       {
         "command": "extension.phpServer.reloadServer",
-        "title": "PHP Server: Reload Server"
+        "title": "PHP Server: Reload server"
       },
       {
         "command": "extension.phpServer.openFileInBrowser",
-        "title": "PHP Server: Open file in Browser"
+        "title": "PHP Server: Open file in browser"
       },
       {
         "command": "extension.phpServer.stopServer",
-        "title": "PHP Server: Stop"
+        "title": "PHP Server: Stop server"
       }
     ],
     "configuration": {
       "type": "object",
-      "title": "PHP Server Configuration",
+      "title": "PHP Server configuration",
       "properties": {
         "phpserver.port": {
           "type": "integer",
           "default": 3000,
-          "description": "Server Port Number"
+          "description": "Server's port number"
         },
         "phpserver.relativePath": {
           "type": "string",
           "default": ".",
-          "description": "Path relative to project (In case that you want to serve a different folder than workspace)"
+          "description": "Path relative to project. This is useful when you want to serve a different folder than the one from current workspace."
         },
         "phpserver.browser": {
           "type": "string",
           "default": null,
-          "description": "Select the browser that will open localhost (Options: firefox, chrome or edge. If empty, no browser will be opened)"
+          "description": "App used to open the server URL. If empty, it will use the default browser. You can put any browser name here as long as it's installed in your machine (e.g. google-chrome, firefox, chromium-browser...)"
         },
         "phpserver.ip": {
           "type": "string",
           "default": "localhost",
-          "description": "Server IP ('localhost','0.0.0.0',...)"
+          "description": "Server's ip/hostname (e.g. localhost, 0.0.0.0...)"
         },
         "phpserver.router": {
           "type": "string",
           "default": null,
-          "description": "Specify the location of your custom router script ('router.php', '/home/user/router.php'...)"
+          "description": "Path to custom router that will be used by PHP server."
         },
         "phpserver.phpPath": {
           "type": "string",
           "default": null,
-          "description": "Specify the location of your PHP executable. If empty, the extension will use the PHP executable which appears in the $PATH environment variable"
+          "description": "Path to PHP executable. If empty, the extension will try to get the path from the $PATH environment variable."
         },
         "phpserver.phpConfigPath": {
           "type": "string",
           "default": null,
-          "description": "Specify the location of your php.ini file. If empty, the extension uses the default path."
+          "description": "Path to php.ini file. If empty, the extension uses the default path."
         },
         "phpserver.autoOpenOnReload": {
           "type": "boolean",
           "default": true,
-          "description": "Automatically opens file in browser after server reload"
+          "description": "Enable/disable automatic opening of server's URL in the browser after server has been reloaded."
         }
       }
     },
