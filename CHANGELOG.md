@@ -1,5 +1,8 @@
 # Changelog
 
+### 3.0.1
+* BreakingChangesNotifier: Corrected extension identifier
+
 ### 3.0.0
 * Changed behaviour of `phpserver.browser` setting. It now supports any application installed in the host machine. If empty, it will open the default browser.
 * Improved error messages. Errors are logged in vscode's output channel.
