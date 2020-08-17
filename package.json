@@ -10,6 +10,13 @@
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "php",
+    "php server",
+    "host php",
+    "html",
+    "http server"
+  ],
   "activationEvents": [
     "onCommand:extension.phpServer.serveProject",
     "onCommand:extension.phpServer.openFileInBrowser",
