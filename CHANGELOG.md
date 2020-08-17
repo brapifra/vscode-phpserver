@@ -1,5 +1,14 @@
 # Changelog
 
+### 3.0.0
+* Changed behaviour of `phpserver.browser` setting. It now supports any application installed in the host machine. If empty, it will open the default browser.
+* Improved error messages. Errors are logged in vscode's output channel.
+* Added logic to show notification if PHP was not found.
+* Added support for workspaces with multiple folders.
+* Changed package.json's vscode engine to proper version.
+* Major refactor + tests.
+* Updated README.md
+
 ### 2.4.6
 * Demo gif
 
