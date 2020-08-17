@@ -26,8 +26,8 @@
         "command": "extension.phpServer.serveProject",
         "title": "PHP Server: Serve Project",
         "icon": {
-          "light": "./src/server.svg",
-          "dark": "./src/server.svg"
+          "light": "./assets/server.svg",
+          "dark": "./assets/server.svg"
         }
       },
       {
@@ -146,7 +146,7 @@
     "commondir": "^1.0.1",
     "open": "^7.0.4"
   },
-  "icon": "src/server.png",
+  "icon": "assets/server.png",
   "__metadata": {
     "id": "a8194b6b-5989-4647-a5b8-ac7085201841",
     "publisherId": "e6e9800f-ddad-408c-803c-302d6381770b",

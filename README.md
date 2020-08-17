@@ -2,7 +2,7 @@
 
 Host/Serve current workspace (or subfolder) with PHP.
 
-![demo](demo.gif)
+![demo](./assets/demo.gif)
 
 ## Features
 
