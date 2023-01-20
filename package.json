@@ -31,7 +31,15 @@
     "commands": [
       {
         "command": "extension.phpServer.serveProject",
-        "title": "PHP Server: Serve project",
+        "title": "PHP Server: Start server",
+        "icon": {
+          "light": "./assets/server-stopped.svg",
+          "dark": "./assets/server-stopped-dark.svg"
+        }
+      },
+      {
+        "command": "extension.phpServer.openFileInBrowser",
+        "title": "PHP Server: Open in browser",
         "icon": {
           "light": "./assets/server.svg",
           "dark": "./assets/server.svg"
@@ -40,10 +48,6 @@
       {
         "command": "extension.phpServer.reloadServer",
         "title": "PHP Server: Reload server"
-      },
-      {
-        "command": "extension.phpServer.openFileInBrowser",
-        "title": "PHP Server: Open file in browser"
       },
       {
         "command": "extension.phpServer.stopServer",
@@ -101,29 +105,34 @@
         {
           "command": "extension.phpServer.serveProject",
           "group": "navigation",
-          "when": "resourceLangId == php || resourceLangId == html"
+          "when": "resourceLangId =~ /^html$|^php$/ && !phpServer.serverRunning"
+        },
+        {
+          "command": "extension.phpServer.openFileInBrowser",
+          "group": "navigation",
+          "when": "resourceLangId =~ /^html$|^php$/ && phpServer.serverRunning"
         }
       ],
       "editor/context": [
         {
           "command": "extension.phpServer.serveProject",
           "group": "2_phpserver@1",
-          "when": "resourceLangId == php || resourceLangId == html"
-        },
-        {
-          "command": "extension.phpServer.reloadServer",
-          "group": "2_phpserver@2",
-          "when": "resourceLangId == php || resourceLangId == html"
+          "when": "resourceLangId =~ /^html$|^php$/ && !phpServer.serverRunning"
         },
         {
           "command": "extension.phpServer.openFileInBrowser",
+          "group": "2_phpserver@2",
+          "when": "resourceLangId =~ /^html$|^php$/ && phpServer.serverRunning"
+        },
+        {
+          "command": "extension.phpServer.reloadServer",
           "group": "2_phpserver@3",
-          "when": "resourceLangId == php || resourceLangId == html"
+          "when": "resourceLangId =~ /^html$|^php$/ && phpServer.serverRunning"
         },
         {
           "command": "extension.phpServer.stopServer",
           "group": "2_phpserver@4",
-          "when": "resourceLangId == php || resourceLangId == html"
+          "when": "resourceLangId =~ /^html$|^php$/ && phpServer.serverRunning"
         }
       ]
     }

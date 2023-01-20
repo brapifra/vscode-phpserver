@@ -11,6 +11,7 @@ interface CommandControllerContext {
     path: string;
     getConfiguration(): ExtensionConfiguration;
   };
+  execute<T>(command: string, ...rest: any[]): Thenable<T | undefined>;
   notify(message: string): void;
   getRootPath(): string | undefined;
   getAbsolutePathToActiveFile(): string | undefined;
@@ -22,10 +23,12 @@ export default class CommandController {
 
   constructor(private context: CommandControllerContext) {
     this.server = new PHPServer();
+    this.context.execute('setContext', 'phpServer.serverRunning', false);
 
     this.server.on('data', this.logger.appendLine);
 
     this.server.on('close', () => {
+      // ?? This is fired on start even if server is still running, so can't set phpServer.serverRunning to false here
       this.context.notify(Messages.SERVER_STOPPED);
     });
 
@@ -71,12 +74,14 @@ export default class CommandController {
   stopServer = (): void => {
     if (this.server.isRunning()) {
       this.server.stop();
+      this.context.execute('setContext', 'phpServer.serverRunning', false);
     }
   };
 
   private startServer() {
     this.server.start(this.getServerConfiguration());
     this.context.notify(Messages.SERVING_PROJECT);
+    this.context.execute('setContext', 'phpServer.serverRunning', true);
   }
 
   private getServerConfiguration(): PHPServerConfig {
