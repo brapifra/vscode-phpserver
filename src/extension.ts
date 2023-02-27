@@ -33,14 +33,14 @@ export async function activate({
   );
   subscriptions.push(
     vscode.commands.registerCommand(
-      'extension.phpServer.reloadServer',
-      ErrorHandler(controller.reloadServer)
+      'extension.phpServer.openFileInBrowser',
+      ErrorHandler(controller.openFileInBrowser)
     )
   );
   subscriptions.push(
     vscode.commands.registerCommand(
-      'extension.phpServer.openFileInBrowser',
-      ErrorHandler(controller.openFileInBrowser)
+      'extension.phpServer.reloadServer',
+      ErrorHandler(controller.reloadServer)
     )
   );
   subscriptions.push(
@@ -57,6 +57,7 @@ function getCommandControllerContext(extensionPath: string) {
       path: extensionPath,
       getConfiguration: getExtensionConfiguration,
     },
+    execute: vscode.commands.executeCommand,
     notify: vscode.window.showInformationMessage,
     getRootPath,
     getAbsolutePathToActiveFile: () =>

@@ -29,6 +29,7 @@ const contextMock = {
   getRootPath: jest.fn(() => 'rootPath'),
   getAbsolutePathToActiveFile: jest.fn(() => undefined),
   notify: jest.fn(),
+  execute: jest.fn(),
 };
 
 beforeEach(() => {
@@ -52,6 +53,7 @@ describe('CommandController', () => {
     contextMock.extension.getConfiguration.mockImplementation(
       () => defaultConfig
     );
+    contextMock.execute.mockClear();
     contextMock.notify.mockClear();
     contextMock.getRootPath.mockClear();
     contextMock.getAbsolutePathToActiveFile.mockClear();

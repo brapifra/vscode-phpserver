@@ -1,5 +1,9 @@
 # Changelog
 
+### 3.1.0
+* Visualize with icon if server is running, gray icon if not running, blue if running. If running a click will now trigger open in browser instead of error
+* Toggle file menu options depending on server status, only show relevant actions depending on if server is running
+
 ### 3.0.1
 * BreakingChangesNotifier: Corrected extension identifier
 

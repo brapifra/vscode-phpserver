@@ -22,7 +22,7 @@ export function withErrorHandler(errorHandler: (error: Error) => void) {
   return (fn: Function) => (...args: any[]) => {
     try {
       return fn(...args);
-    } catch (error) {
+    } catch (error: any) {
       errorHandler(error);
     }
   };
