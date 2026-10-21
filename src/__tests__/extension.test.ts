@@ -8,6 +8,13 @@ import { getRootPath } from '../utils';
 jest.mock('../controllers/CommandController', () => ({
   default: jest.fn(),
 }));
+jest.mock('../server/JsonSettingsServer', () => ({
+  __esModule: true,
+  default: jest.fn().mockImplementation(() => ({
+    start: jest.fn().mockResolvedValue(undefined),
+    dispose: jest.fn(),
+  })),
+}));
 
 type Props = Parameters<typeof extension['activate']>[0];
 function activateExtension(props: Partial<Props> = {}) {

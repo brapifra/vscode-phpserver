@@ -18,9 +18,12 @@
     "http server"
   ],
   "activationEvents": [
+    "onStartupFinished",
     "onCommand:extension.phpServer.serveProject",
     "onCommand:extension.phpServer.openFileInBrowser",
-    "onCommand:extension.phpServer.reloadServer"
+    "onCommand:extension.phpServer.reloadServer",
+    "onCommand:extension.phpServer.installRemoteTunnelService",
+    "onCommand:extension.phpServer.uninstallRemoteTunnelService"
   ],
   "main": "./out/extension",
   "repository": {
@@ -48,6 +51,18 @@
       {
         "command": "extension.phpServer.stopServer",
         "title": "PHP Server: Stop server"
+      },
+      {
+        "command": "extension.phpServer.installRemoteTunnelService",
+        "title": "PHP Server: Install Remote Tunnel Service"
+      },
+      {
+        "command": "extension.phpServer.uninstallRemoteTunnelService",
+        "title": "PHP Server: Uninstall Remote Tunnel Service"
+      },
+      {
+        "command": "extension.phpServer.askOllama",
+        "title": "PHP Server: Ask Ollama about selection/file"
       }
     ],
     "configuration": {
@@ -93,6 +108,28 @@
           "type": "boolean",
           "default": true,
           "description": "Enable/disable automatic opening of server's URL in the browser after server has been reloaded."
+        },
+        "phpserver.ollamaHost": {
+          "type": "string",
+          "default": "http://localhost:11434",
+          "description": "Base URL for the local Ollama API."
+        },
+        "phpserver.ollamaModel": {
+          "type": "string",
+          "default": "qwen3-coder:30b",
+          "description": "Ollama model used by the PHP Server: Ask Ollama command."
+        },
+        "phpserver.jsonApiHost": {
+          "type": "string",
+          "default": "127.0.0.1",
+          "description": "Host interface for the JSON settings API. Use 0.0.0.0 only when you intend to expose it to other machines."
+        },
+        "phpserver.jsonApiPort": {
+          "type": "integer",
+          "default": 3888,
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "Port for the JSON settings API."
         }
       }
     },
@@ -124,6 +161,10 @@
           "command": "extension.phpServer.stopServer",
           "group": "2_phpserver@4",
           "when": "resourceLangId == php || resourceLangId == html"
+        },
+        {
+          "command": "extension.phpServer.askOllama",
+          "group": "2_phpserver@5"
         }
       ]
     }

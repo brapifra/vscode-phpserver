@@ -1,5 +1,8 @@
 # Changelog
 
+### Unreleased
+* Added an extension-managed JSON settings API with GET and PUT endpoints.
+
 ### 3.0.1
 * BreakingChangesNotifier: Corrected extension identifier
 

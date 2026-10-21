@@ -1,51 +1,52 @@
-# [PHP Server](https://github.com/brapifra/vscode-phpserver) ![CI](https://github.com/brapifra/vscode-phpserver/workflows/CI/badge.svg)
+# PHP Server
 
-<a href='https://ko-fi.com/G2G54ANWH' target='_blank'>
-    <img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' />
-</a>
+Serve a project with PHP's built-in web server and expose a small JSON settings
+API for remote agents.
 
-Host / serve current workspace (or subfolder) with PHP.
+## JSON settings API
 
-![demo](./assets/demo.gif)
+The JSON API starts when the extension activates. By default it listens only on
+`127.0.0.1:3888`; configure `phpserver.jsonApiHost` and `phpserver.jsonApiPort`
+to change the bind address and port. To make it reachable through your own
+public host or tunnel, bind to `0.0.0.0` and configure that host or tunnel to
+forward the selected port.
 
-## Getting started
+The API has two operations:
 
-There are multiple ways of running `PHP server`:
+- `GET /api/{key}` returns `{"key":"...","value":...}` or `404` if the key is
+  not set.
+- `PUT /api/{key}` stores the JSON request body as that key's value and returns
+  the stored key and value.
 
-- `CTRL + SHIFT + P` and searching for `PHP Server: Serve project` command
-- Clicking on vscode's editor button (icon on the top-right corner)
-- Right-clicking on vscode's editor when a `.php` or an `.html` is open.
+Keys may contain letters, numbers, dots, underscores, and hyphens. Values can
+be any valid JSON value up to 1 MB. Data is persisted in VS Code extension
+global state, so it is available after the extension restarts and across
+workspaces in the same VS Code profile.
 
-To stop the server, the `PHP Server: Stop project` command can be executed likewise.
+Example:
 
-## Commands
+```sh
+curl -X PUT http://127.0.0.1:3888/api/agent-settings \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"agent-v1","instructions":"Stay on task"}'
 
-All commands can be executed by pressing `CTRL + SHIFT + P` and typing the name of the command.
+curl http://127.0.0.1:3888/api/agent-settings
+```
 
-| Command                            | Notes                                                                                                          |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `PHP Server: Serve project`        |                                                                                                                |
-| `PHP Server: Stop project`         |                                                                                                                |
-| `PHP Server: Reload server`        | Stops the running server and starts it again.                                                                  |
-| `PHP Server: Open file in browser` | Quickly opens the URL of the active file in the browser. If the server is not running, this command will fail. |
+Cross-origin browser requests are enabled. **The API has no authentication or
+access control.** Anyone who can reach the bound address can read and overwrite
+stored values. Do not expose it publicly unless your network or tunnel provides
+appropriate access restrictions.
 
-## Settings
+## VS Code Remote Tunnel service
 
-| Setting                      | Default     | Notes                                                                                                                                                                                                                                                                                                                     |
-| ---------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `phpserver.autoOpenOnReload` | `true`      | Enable/disable automatic opening of server's URL in the browser after server has been reloaded.                                                                                                                                                                                                                           |
-| `phpserver.browser`          | `null`      | App used to open the server URL. If empty, it will use the default browser.<br/> You can put **any** browser name here as long as it's installed in your machine (e.g. `google-chrome`, `firefox`, `chromium-browser`...)                                                                                                 |
-| `phpserver.ip`               | `localhost` | Server's ip/hostname (e.g. `localhost`, `0.0.0.0`...)                                                                                                                                                                                                                                                                     |
-| `phpserver.phpConfigPath`    | `null`      | Path to `php.ini` file. If empty, the extension uses the default path.                                                                                                                                                                                                                                                    |
-| `phpserver.phpPath`          | `null`      | Path to PHP executable. If empty, the extension will try to get the path from the `$PATH` environment variable.                                                                                                                                                                                                           |
-| `phpserver.port`             | `3000`      | Server's port number.                                                                                                                                                                                                                                                                                                     |
-| `phpserver.relativePath`     | `"."`       | Path relative to project. This is useful when you want to serve a different folder than the one from current workspace.                                                                                                                                                                                                   |
-| `phpserver.router`           | `null`      | Path to custom router script that will be used by PHP server. [Example](https://www.php.net/manual/en/features.commandline.webserver.php#example-421).<br/>If a custom router script is used on a Windows machine, there will be no console output unless a logger like [this](src/logger.php) is included in the script. |
+Use the **PHP Server: Install Remote Tunnel Service** command to open a
+terminal and run `code tunnel service install`. Complete any sign-in prompts in
+the terminal or browser. VS Code then registers the tunnel as a machine service
+so it can start without manually launching `code tunnel` each time. The VS Code
+`code` command must be available in the terminal's `PATH`.
 
-## Requirements
-
-- PHP needs to be installed in order to be able to use this extension.
-
-## Author
-
-[Brais Piñeiro](http://github.com/brapifra)
+Use **PHP Server: Uninstall Remote Tunnel Service** to run
+`code tunnel service uninstall` when you no longer want the service. These
+commands manage the VS Code Remote Tunnel service; they do not expose or
+authenticate the JSON settings API.
